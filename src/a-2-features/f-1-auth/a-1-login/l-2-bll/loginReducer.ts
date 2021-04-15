@@ -8,5 +8,7 @@ export const loginReducer = (state = loginInitState, action: LoginActionsType): 
         case 'login/SET_IS_IS_LOGGED-IN':
         case 'login/SET_ERROR':
             return {...state, ...action}
+        default:
+            return state
     }
 }

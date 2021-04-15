@@ -1,7 +1,19 @@
 import { Dispatch } from "redux";
-import { LoginDataType } from "../l-3-dal/LoginAPI";
-import { setIsFetching } from "./loginActionsType";
+import {LoginAPI, LoginDataType } from "../l-3-dal/LoginAPI";
+import {setError, setIsFetching, setIsLoggedIn } from "./loginActionsType";
 
-const loginTC = (data:LoginDataType) => (dispatch:Dispatch) => {
+export const loginTC = (data:LoginDataType) => async (dispatch:Dispatch) => {
     dispatch(setIsFetching(true))
+    try {
+        const res = await LoginAPI.login(data)
+        dispatch(setIsLoggedIn(true))
+    }
+    catch (e) {
+        const error = e.response? e.response.data.error : (e.message + ', more details in the console')
+        dispatch(setError(error))
+        console.log('Error:', {...e})
+    }
+    finally {
+        dispatch(setIsFetching(false))
+    }
 }

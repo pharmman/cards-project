@@ -3,13 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './a-1-main/m-1-ui/App';
 import reportWebVitals from './reportWebVitals';
-import {DatePicker} from "antd";
 
 ReactDOM.render(
-  <React.StrictMode>
-      <App/>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App/>, document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

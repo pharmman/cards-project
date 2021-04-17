@@ -1,13 +1,10 @@
-import {LoginActionsType} from "./loginActionsType";
+import {LoginActions} from "./loginActions";
 import {LoginStateType, loginInitState} from "./loginInitState";
 
 
-export const loginReducer = (state = loginInitState, action: LoginActionsType): LoginStateType => {
+export const loginReducer = (state = loginInitState, action: LoginActions): LoginStateType => {
     switch (action.type) {
-        case 'login/SET_FETCHING':
-        case 'login/SET_IS_IS_LOGGED-IN':
-        case 'login/SET_ERROR':
-            return {...state, ...action}
+        case 'login/SET-IS-LOGGED-IN':
         default:
             return state
     }

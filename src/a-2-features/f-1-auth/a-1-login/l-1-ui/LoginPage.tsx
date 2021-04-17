@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../../a-1-main/m-2-bll/store";
 import {Button, Card, Checkbox, Col, Form, Input, message, Row} from "antd";
 import {NavLink} from "react-router-dom";
-import {loginTC} from "../l-2-bll/loginThunk";
+import {loginTC} from "../l-2-bll/loginThunks";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 interface IFormInput {
     email: string;
@@ -13,7 +15,8 @@ interface IFormInput {
 
 export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
-    const error = useSelector<AppRootStateType, string>(state => state.login.error)
+    const error = useSelector<AppRootStateType, string>(state => state.app.error)
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
 
     useEffect(() => {
         if (error) {
@@ -28,11 +31,22 @@ export const LoginPage: React.FC = () => {
         labelCol: {span: 24},
     };
     const startLayout = {
-        wrapperCol: {span: 11},
+        wrapperCol: {span: 12},
     };
 
     const onSubmit = (data: IFormInput) => {
         dispatch(loginTC({...data}))
+    }
+
+    const antIcon = <LoadingOutlined style={{ fontSize: 96 }} spin />;
+
+
+    if (isFetching) {
+        return (
+            <Row justify={'center'} align={'middle'} style={{minHeight: '100vh'}}>
+                <Spin  indicator={antIcon} />
+            </Row>
+        )
     }
 
     return (

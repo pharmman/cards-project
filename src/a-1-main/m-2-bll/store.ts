@@ -4,13 +4,15 @@ import {loginReducer} from "../../a-2-features/f-1-auth/a-1-login/l-2-bll/loginR
 import {useDispatch} from "react-redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {appReducer} from "./appReducer";
+import {registerReducer} from '../../a-2-features/f-1-auth/a-2-register/r-2-bll/registerReducer'
 
 type AppDispatchType = typeof store.dispatch
 
 
 const reducer = combineReducers({
     login: loginReducer,
-    app: appReducer
+    app: appReducer,
+    register: registerReducer
 })
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))

@@ -62,80 +62,76 @@ export const RegisterPage: React.FC = () => {
     }
     return (
         <div className="site-card-border-less-wrapper">
-            <>
-                <Row justify={'center'} align={'top'}>
-                    <h1>Registration</h1>
-                </Row>
-                <>
-                    <Row justify={'center'} align={'top'}>
-                        <Col span={14}>
-                            <Card>
-                                <Form layout={'vertical'} onFinish={onSubmit}>
-                                    <Form.Item
-                                        label={'Email'}
-                                        name="email"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your E-mail!'
+            <Row justify={'center'} align={'top'}>
+                <h1>Registration</h1>
+            </Row>
+            <Row justify={'center'} align={'top'}>
+                <Col span={14}>
+                    <Card>
+                        <Form layout={'vertical'} onFinish={onSubmit}>
+                            <Form.Item
+                                label={'Email'}
+                                name="email"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your E-mail!'
+                                    }
+                                ]}
+                            >
+                                <Input size={'large'}/>
+                            </Form.Item>
+                            <Form.Item
+                                label={'Password'}
+                                name="password"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your password!'
+                                    },
+                                    {
+                                        min: 8,
+                                        message: 'Password must be 8 characters or more'
+                                    }
+                                ]}>
+                                <Input.Password autoComplete={'on'} size={'large'}/>
+                            </Form.Item>
+                            <Form.Item
+                                name="confirm"
+                                label="Confirm Password"
+                                dependencies={['password']}
+                                hasFeedback
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please confirm your password!'
+                                    },
+                                    ({getFieldValue}) => ({
+                                        validator(_, value) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve()
                                             }
-                                        ]}
-                                    >
-                                        <Input size={'large'}/>
-                                    </Form.Item>
-                                    <Form.Item
-                                        label={'Password'}
-                                        name="password"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please input your password!'
-                                            },
-                                            {
-                                                min: 8,
-                                                message: 'Password must be 8 characters or more'
-                                            }
-                                        ]}>
-                                        <Input.Password autoComplete={'on'} size={'large'}/>
-                                    </Form.Item>
-                                    <Form.Item
-                                        name="confirm"
-                                        label="Confirm Password"
-                                        dependencies={['password']}
-                                        hasFeedback
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Please confirm your password!'
-                                            },
-                                            ({getFieldValue}) => ({
-                                                validator(_, value) {
-                                                    if (!value || getFieldValue('password') === value) {
-                                                        return Promise.resolve()
-                                                    }
-                                                    return Promise.reject(new Error('The two passwords that you entered do not match!'))
-                                                }
-                                            })
-                                        ]}
-                                    >
-                                        <Input.Password autoComplete={'on'} size={'large'}/>
-                                    </Form.Item>
-                                    <Form.Item>
-                                        <Row>
-                                            <Col span={24} style={{textAlign: 'left'}}>
-                                                <Button size={'large'} style={{width: '30%'}} type="primary"
-                                                        htmlType="submit" {...layout}>
-                                                    Registration
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Card>
-                        </Col>
-                    </Row>
-                </>
-            </>
+                                            return Promise.reject(new Error('The two passwords that you entered do not match!'))
+                                        }
+                                    })
+                                ]}
+                            >
+                                <Input.Password autoComplete={'on'} size={'large'}/>
+                            </Form.Item>
+                            <Form.Item>
+                                <Row>
+                                    <Col span={24} style={{textAlign: 'left'}}>
+                                        <Button size={'large'} style={{width: '30%'}} type="primary"
+                                                htmlType="submit" {...layout}>
+                                            Registration
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                </Col>
+            </Row>
         </div>
     )
 }

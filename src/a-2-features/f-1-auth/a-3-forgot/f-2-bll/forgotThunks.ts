@@ -17,7 +17,7 @@ export const sendMessageTC = (email: string): ThunkType => async (dispatch) => {
     }
 }
 
-export const installNewPasswordTC = (email:string, token:string):ThunkType => async (dispatch) => {
+export const setNewPasswordTC = (email:string, token:string):ThunkType => async (dispatch) => {
     dispatch(setIsFetching(true))
     try {
         await ForgotAPI.setNewPassword(email, token)

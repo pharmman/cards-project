@@ -21,3 +21,21 @@ export const loginTC = (data:LoginDataType):ThunkType => async (dispatch) => {
         dispatch(setIsFetching(false))
     }
 }
+
+export const authMeTC = ():ThunkType => async (dispatch) => {
+    dispatch(setIsFetching(true))
+    try {
+        const res = await LoginAPI.authMe()
+        dispatch(setProfile(res.data))
+        dispatch(setIsLoggedIn(true))
+        dispatch(setAppError(''))
+    }
+    catch (e) {
+        const error = e.response? e.response.data.error : (e.message + ', more details in the console')
+        dispatch(setAppError(error))
+        console.log('Error:', {...e})
+    }
+    finally {
+        dispatch(setIsFetching(false))
+    }
+}

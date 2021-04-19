@@ -4,6 +4,8 @@ import {ForgotPage} from "../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/Fo
 import {RegisterPage} from "../../../../a-2-features/f-1-auth/a-2-register/r-1-ui/RegisterPage";
 import {LoginPage} from "../../../../a-2-features/f-1-auth/a-1-login/l-1-ui/LoginPage";
 import {NewPasswordPage} from '../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/NewPasswordPage'
+import {ProfilePage} from '../../../../a-2-features/f-1-auth/a-4-profile/p-1-ui/ProfilePage'
+import {LoginRedirect} from '../../../../a-3-common/c-2-loginRedirect/LoginRedirect'
 
 export type PageType = {
     _id: number;
@@ -30,4 +32,5 @@ export const pages:PageType[] = [
     {_id: 2, title: "register", path: PATH.REGISTER, exact: true, page: <RegisterPage/>},
     {_id: 3, title: "forgot", path: PATH.FORGOT, exact: true, page: <ForgotPage/>},
     {_id: 4, title: "newPassword", path: PATH.SET_PASS, exact: false, page: <NewPasswordPage/>},
+    {_id: 5, title: "profile", path: PATH.PROFILE, exact: true, page: <LoginRedirect><ProfilePage/></LoginRedirect>},
 ]

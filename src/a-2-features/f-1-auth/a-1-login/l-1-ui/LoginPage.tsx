@@ -2,9 +2,9 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {Button, Card, Checkbox, Col, Form, Input, message, Row} from 'antd'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Redirect} from 'react-router-dom'
 import {loginTC} from '../l-2-bll/loginThunks'
-import {Preloader} from '../../../f-9-common/c-1-preloader/Preloader'
+import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 
 interface LoginFormDataType {
     email: string;
@@ -16,6 +16,7 @@ export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string>(state => state.app.error)
     const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     useEffect(() => {
         if (error) {
@@ -40,6 +41,10 @@ export const LoginPage: React.FC = () => {
 
     if (isFetching) {
         return <Preloader/>
+    }
+
+    if (isLoggedIn) {
+        return <Redirect to={'/profile'}/>
     }
 
     return (

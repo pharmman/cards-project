@@ -23,5 +23,8 @@ export type ProfileType = {
 export const LoginAPI = {
     login(data:LoginDataType) {
         return instance.post<ProfileType>('auth/login', {...data})
+    },
+    authMe () {
+        return instance.post<ProfileType>('auth/me')
     }
 }

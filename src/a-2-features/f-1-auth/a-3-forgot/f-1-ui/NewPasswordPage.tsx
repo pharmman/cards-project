@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {setNewPasswordTC} from '../f-2-bll/forgotThunks'
 import {Redirect, useParams} from 'react-router-dom'
 import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
-import {Preloader} from '../../../f-9-common/c-1-preloader/Preloader'
+import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 
 type NewPasswordFormDataType = {
     password: string

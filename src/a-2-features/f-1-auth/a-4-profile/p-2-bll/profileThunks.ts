@@ -1,20 +1,20 @@
-import {LoginAPI, LoginDataType} from "../l-3-dal/LoginAPI";
-import {setIsLoggedIn} from "./loginActions";
-import {ThunkType} from "../../../../a-1-main/m-2-bll/Actions";
+import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
 import {setAppError, setIsFetching} from '../../../../a-1-main/m-2-bll/appActions'
-import {setProfile} from '../../a-4-profile/p-2-bll/profileActions'
+import {setProfile, setSuccess} from './profileActions'
+import {ProfileAPI} from '../p-3-dal/ProfileAPI'
 
-export const loginTC = (data:LoginDataType):ThunkType => async (dispatch) => {
+export const authMeTC = ():ThunkType => async (dispatch) => {
     dispatch(setIsFetching(true))
     try {
-        const res = await LoginAPI.login(data)
+        const res = await ProfileAPI.authMe()
         dispatch(setProfile(res.data))
-        dispatch(setIsLoggedIn(true))
+        dispatch(setSuccess(true))
         dispatch(setAppError(''))
     }
     catch (e) {
         const error = e.response? e.response.data.error : (e.message + ', more details in the console')
         dispatch(setAppError(error))
+        dispatch(setSuccess(false))
         console.log('Error:', {...e})
     }
     finally {

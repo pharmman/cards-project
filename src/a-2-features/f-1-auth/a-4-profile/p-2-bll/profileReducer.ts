@@ -1,5 +1,6 @@
 import {profileInitState, ProfileStateType} from './profileInitState'
 import {ProfileActionsType} from './profileActions'
+import {ProfileType} from '../../a-1-login/l-3-dal/LoginAPI'
 
 export const profileReducer = (state = profileInitState, action: ProfileActionsType): ProfileStateType => {
     switch (action.type) {
@@ -11,3 +12,15 @@ export const profileReducer = (state = profileInitState, action: ProfileActionsT
             return state
     }
 }
+
+// const profile:ProfileType = {
+//     _id: '1',
+//     email: 'test@gmail.com',
+//     created: new Date(Date.now()),
+//     isAdmin: false,
+//     name: 'Test',
+//     publicCardPacksCount: 10,
+//     rememberMe: true,
+//     updated: new Date(Date.now()),
+//     verified: false
+// }

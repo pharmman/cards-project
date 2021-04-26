@@ -12,8 +12,8 @@ export type ProfileType = {
     name: string
     avatar?:string
     publicCardPacksCount: number
-    created: Date
-    updated:Date
+    created: Date | string
+    updated:Date | string
     isAdmin: boolean
     verified: boolean
     rememberMe: boolean

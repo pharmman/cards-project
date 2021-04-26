@@ -6,23 +6,26 @@ import {NavLink, Redirect} from 'react-router-dom'
 import {loginTC} from '../l-2-bll/loginThunks'
 import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 
-interface LoginFormDataType {
+
+export interface FormDataType {
     email: string;
     password: string;
+}
+
+export interface LoginFormDataType extends FormDataType {
     rememberMe: boolean;
 }
 
+
 export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
-    const error = useSelector<AppRootStateType, string>(state => state.app.error)
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const error = useSelector<AppRootStateType, string>(state => state.login.error)
+    const loading = useSelector<AppRootStateType, boolean>(state => state.login.loading)
+    const loginSuccess = useSelector<AppRootStateType, boolean>(state => state.login.success)
 
     useEffect(() => {
         if (error) {
-            message.error(error, 5)
-        }
-        return () => {
+            return message.error(error, 5)
         }
     }, [error])
 
@@ -39,11 +42,11 @@ export const LoginPage: React.FC = () => {
         dispatch(loginTC({...data}))
     }
 
-    if (isFetching) {
+    if (loading) {
         return <Preloader/>
     }
 
-    if (isLoggedIn) {
+    if (loginSuccess && !error) {
         return <Redirect to={'/profile'}/>
     }
 

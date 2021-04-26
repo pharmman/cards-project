@@ -7,4 +7,4 @@ import {ProfileActionsType} from '../../a-2-features/f-1-auth/a-4-profile/p-2-bl
 import {ForgotActionsType} from '../../a-2-features/f-1-auth/a-3-forgot/f-2-bll/forgotActions'
 
 type CommonActionsTypes = LoginActions | AppActionsType | RegisterActionsType | ProfileActionsType | ForgotActionsType
-export type ThunkType = ThunkAction<void, AppRootStateType, unknown, CommonActionsTypes>
+export type ThunkType = ThunkAction<Promise<any>, AppRootStateType, unknown, CommonActionsTypes>

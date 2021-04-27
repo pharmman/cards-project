@@ -7,52 +7,47 @@ import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 import 'antd/dist/antd.css'
 import {registerTC} from '../r-2-bll/registerThunks'
 import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
-import {setIsRegistered} from '../r-2-bll/registerActions'
 import {setAppError} from '../../../../a-1-main/m-2-bll/appActions'
 import {FormDataType} from '../../a-1-login/l-1-ui/LoginPage'
 
 export const RegisterPage: React.FC = () => {
-
     const dispatch = useDispatch()
-    const error = useSelector<AppRootStateType, string>(state => state.app.error)
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.app.isFetching)
-    const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
-    const [redirect, setRedirect] = useState<boolean>(false)
-    const [first, setFirst] = useState<boolean>(true)
+    const error = useSelector<AppRootStateType, string>(state => state.register.error)
+    const loading = useSelector<AppRootStateType, boolean>(state => state.register.loading)
+    const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
+    // const [redirect, setRedirect] = useState<boolean>(false)
+    // const [first, setFirst] = useState<boolean>(true)
 
-    useEffect(() => {
-        if (first) {
-            dispatch(setAppError(''))
-            dispatch(setIsRegistered(false))
-            setFirst(false)
-        } else {
-            if (!redirect && isRegistered) {
-                setRedirect(true)
-            }
-        }
-    }, [isRegistered, redirect, first, dispatch])
+    // useEffect(() => {
+    //     if (first) {
+    //         setFirst(false)
+    //     } else {
+    //         if (!redirect && success) {
+    //             setRedirect(true)
+    //         }
+    //     }
+    // }, [success, redirect, first, dispatch])
+
+    const onSubmit = (data: FormDataType) => {
+        dispatch(registerTC(data.email, data.password))
+    }
 
     //ant-design styles
     const layout = {
         offset: {span: 2}
     }
 
+    //pop-up if error
     useEffect(() => {
         if (error) {
-            message.error(error, 5)
-        }
-        return () => {
+            return message.error(error, 5)
         }
     }, [error])
 
-    const onSubmit = (data: FormDataType) => {
-        dispatch(registerTC(data.email, data.password))
-    }
-
-    if (isFetching) {
+    if (loading) {
         return <Preloader/>
     }
-    if (redirect) {
+    if (success) {
         return <Redirect to={PATH.LOGIN}/>
     }
     return (

@@ -1,9 +1,12 @@
-import {instance} from "../../../../a-1-main/m-3-dal/instance";
+import {instance, AuthRequestDataType} from '../../../../a-1-main/m-3-dal/instance'
 
-//TODO проверить возвращаемый тип
+type RegisterReturnType = {
+    error?: string
+}
+
 export const RegisterAPI = {
-    register(email:string, password:string) {
-        return instance.post<{error?: string}>('/auth/register', {email, password})
+    register(data:AuthRequestDataType) {
+        return instance.post<RegisterReturnType>('auth/register', {...data})
     }
 }
 

@@ -4,5 +4,7 @@ export type RegisterStateType = typeof registerInitState
 
 
 export const registerInitState = {
-    isRegistered: false
+    success: false,
+    loading: false,
+    error: ''
 }

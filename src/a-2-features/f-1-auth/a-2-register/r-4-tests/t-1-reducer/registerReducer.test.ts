@@ -1,10 +1,9 @@
-import {LoginStateType} from '../../l-2-bll/loginInitState'
-import {loginReducer} from '../../l-2-bll/loginReducer'
-import {loginActions} from '../../l-2-bll/loginActions'
+import {RegisterStateType} from '../../r-2-bll/registerInitState'
+import {registerReducer} from '../../r-2-bll/registerReducer'
+import {registerActions} from '../../r-2-bll/registerActions'
 
-
-describe('Login Reducer test', () => {
-    let state: LoginStateType
+describe('Register Reducer test', () => {
+    let state: RegisterStateType
     beforeEach(() => {
         state = {
             success: false,
@@ -13,21 +12,21 @@ describe('Login Reducer test', () => {
         }
     })
     it('success should change', () => {
-        const newState = loginReducer(state, loginActions.setSuccess(true))
+        const newState = registerReducer(state, registerActions.setSuccess(true))
 
         expect(newState.error).toBe('')
         expect(newState.success).toBeTruthy()
         expect(newState.loading).toBeFalsy()
     })
     it('error should change', () => {
-        const newState = loginReducer(state, loginActions.setError('Test error'))
+        const newState = registerReducer(state, registerActions.setError('Test error'))
 
         expect(newState.error).toBe('Test error')
         expect(newState.success).toBeFalsy()
         expect(newState.loading).toBeFalsy()
     })
     it('loading should change', () => {
-        const newState = loginReducer(state, loginActions.setLoading(true))
+        const newState = registerReducer(state, registerActions.setLoading(true))
 
         expect(newState.error).toBe('')
         expect(newState.success).toBeFalsy()

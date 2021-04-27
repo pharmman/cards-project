@@ -1,9 +1,10 @@
-import {LoginAPI, LoginDataType} from '../l-3-dal/LoginAPI'
+import {LoginAPI} from '../l-3-dal/LoginAPI'
 import {profileActions, ProfileActionsType} from '../../a-4-profile/p-2-bll/profileActions'
 import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
 import {loginActions, LoginActionsType} from './loginActions'
+import {AuthRequestDataType} from '../../../../a-1-main/m-3-dal/instance'
 
-export const loginTC = (data: LoginDataType): ThunkType<ProfileActionsType | LoginActionsType> => async (dispatch) => {
+export const loginTC = (data: AuthRequestDataType): ThunkType<ProfileActionsType | LoginActionsType> => async (dispatch) => {
     dispatch(loginActions.setLoading(true))
     try {
         const res = await LoginAPI.login(data)

@@ -9,18 +9,12 @@ import {LoginFormDataType} from '../../l-1-ui/LoginPage'
 import {LoginActionsType} from '../../l-2-bll/loginActions'
 import {ProfileType} from '../../l-3-dal/LoginAPI'
 import {ProfileActionsType} from '../../../a-4-profile/p-2-bll/profileActions'
-
-type DispatchExts = ThunkDispatch<AppRootStateType, void, AnyAction>;
-
-const middlewares = [thunk]
-const mockStore = configureMockStore<AppRootStateType, DispatchExts>(middlewares)
-const mock = new MockAdapter(instance)
-const store = mockStore()
-
+import {mock, store} from '../../../../../a-1-main/m-4-tests/mock'
 
 describe('Login thunks, dispatches a login request', () => {
     beforeEach(() => {
         store.clearActions()
+        mock.reset()
     })
     it('when login succeeds', async () => {
         const response: ProfileType = {
@@ -45,7 +39,7 @@ describe('Login thunks, dispatches a login request', () => {
         await store.dispatch(loginTC(formData))
         const expectedActions: (LoginActionsType | ProfileActionsType)[] = [
             {
-                type: 'login/SET-LOADING',
+                type: 'login/SET_LOADING',
                 payload: {loading: true}
             },
             {
@@ -53,14 +47,14 @@ describe('Login thunks, dispatches a login request', () => {
                 payload:{profile: response}
             },
             {
-                type: 'login/SET-SUCCESS',
+                type: 'login/SET_SUCCESS',
                 payload: {success: true}
             },{
-                type: 'login/SET-ERROR',
+                type: 'login/SET_ERROR',
                 payload: {error: ''}
             },
             {
-                type: 'login/SET-LOADING',
+                type: 'login/SET_LOADING',
                 payload: {loading: false}
             }
         ]
@@ -77,23 +71,22 @@ describe('Login thunks, dispatches a login request', () => {
             rememberMe: false
         }
         mock.onPost('auth/login', formData).reply(400, {...response})
-
         await store.dispatch(loginTC(formData))
         const expectedActions: LoginActionsType[] = [
             {
-                type: 'login/SET-LOADING',
+                type: 'login/SET_LOADING',
                 payload: {loading: true}
             },
             {
-                type: 'login/SET-ERROR',
+                type: 'login/SET_ERROR',
                 payload: {error: response.error}
             },
             {
-                type: 'login/SET-SUCCESS',
+                type: 'login/SET_SUCCESS',
                 payload: {success: false}
             },
             {
-                type: 'login/SET-LOADING',
+                type: 'login/SET_LOADING',
                 payload: {loading: false}
             }
         ]

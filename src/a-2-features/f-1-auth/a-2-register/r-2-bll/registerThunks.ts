@@ -1,22 +1,23 @@
-import {ThunkType} from "../../../../a-1-main/m-2-bll/Actions";
-import {RegisterAPI} from "../r-3-dll/RegisterAPI";
-import {setAppError, setIsFetching} from '../../../../a-1-main/m-2-bll/appActions'
-import {setIsRegistered} from './registerActions'
+import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
+import {RegisterAPI} from '../r-3-dll/RegisterAPI'
+import {registerActions, RegisterActionsType} from './registerActions'
+import {FormDataType} from '../../a-1-login/l-1-ui/LoginPage'
 
 
-export const registerTC = (email:string, password: string):ThunkType => async (dispatch) => {
-    dispatch(setIsFetching(true))
+export const registerTC = (data:FormDataType):ThunkType<RegisterActionsType> => async (dispatch) => {
+    dispatch(registerActions.setLoading(true))
     try {
-        await RegisterAPI.register(email, password)
-        dispatch(setAppError(''))
-        dispatch(setIsRegistered(true))
+        await RegisterAPI.register(data)
+        dispatch(registerActions.setError(''))
+        dispatch(registerActions.setSuccess(true))
     }
     catch (e) {
-        const error = e.response? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppError(error))
+        const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
+        dispatch(registerActions.setError(error))
+        dispatch(registerActions.setSuccess(false))
         console.log('Error:', {...e})
     }
     finally {
-        dispatch(setIsFetching(false))
+        dispatch(registerActions.setLoading(false))
     }
 }

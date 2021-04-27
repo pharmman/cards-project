@@ -1,10 +1,4 @@
-import { instance } from "../../../../a-1-main/m-3-dal/instance"
-
-export type LoginDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
+import {instance, AuthRequestDataType} from '../../../../a-1-main/m-3-dal/instance'
 
 export type ProfileType = {
     _id: string
@@ -21,7 +15,7 @@ export type ProfileType = {
 }
 
 export const LoginAPI = {
-    login(data:LoginDataType) {
+    login(data:AuthRequestDataType) {
         return instance.post<ProfileType>('auth/login', {...data})
     }
 }

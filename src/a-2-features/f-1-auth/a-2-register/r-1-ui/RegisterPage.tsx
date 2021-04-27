@@ -9,12 +9,7 @@ import {registerTC} from '../r-2-bll/registerThunks'
 import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
 import {setIsRegistered} from '../r-2-bll/registerActions'
 import {setAppError} from '../../../../a-1-main/m-2-bll/appActions'
-
-
-interface RegisterFormDataType {
-    email: string
-    password: string
-}
+import {FormDataType} from '../../a-1-login/l-1-ui/LoginPage'
 
 export const RegisterPage: React.FC = () => {
 
@@ -50,7 +45,7 @@ export const RegisterPage: React.FC = () => {
         }
     }, [error])
 
-    const onSubmit = (data: RegisterFormDataType) => {
+    const onSubmit = (data: FormDataType) => {
         dispatch(registerTC(data.email, data.password))
     }
 

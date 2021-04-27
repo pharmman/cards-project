@@ -1,16 +1,14 @@
-import createMockStore from 'redux-mock-store'
-import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 import configureMockStore from 'redux-mock-store'
+import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 import {AnyAction} from 'redux'
 import thunk, {ThunkDispatch} from 'redux-thunk'
 import {loginTC} from '../../l-2-bll/loginThunks'
 import MockAdapter from 'axios-mock-adapter'
-import axios from 'axios'
 import {instance} from '../../../../../a-1-main/m-3-dal/instance'
-import {FormDataType, LoginFormDataType} from '../../l-1-ui/LoginPage'
-import {LoginActions, loginSetErrorType, loginSetLoadingType, loginSetSuccessType} from '../../l-2-bll/loginActions'
+import {LoginFormDataType} from '../../l-1-ui/LoginPage'
+import {LoginActionsType} from '../../l-2-bll/loginActions'
 import {ProfileType} from '../../l-3-dal/LoginAPI'
-import {setProfile, setProfileSuccessType, setProfileType} from '../../../a-4-profile/p-2-bll/profileActions'
+import {ProfileActionsType} from '../../../a-4-profile/p-2-bll/profileActions'
 
 type DispatchExts = ThunkDispatch<AppRootStateType, void, AnyAction>;
 
@@ -20,12 +18,12 @@ const mock = new MockAdapter(instance)
 const store = mockStore()
 
 
-describe('getTodos actions', () => {
+describe('Login thunks, dispatches a login request', () => {
     beforeEach(() => {
         store.clearActions()
     })
-    it('dispatches a login request', () => {
-        const testProfile: ProfileType = {
+    it('when login succeeds', async () => {
+        const response: ProfileType = {
             _id: '1',
             avatar: 'test',
             rememberMe: false,
@@ -42,32 +40,63 @@ describe('getTodos actions', () => {
             password: '1234',
             rememberMe: false
         }
-        mock.onPost('auth/login', formData).reply(200, {...testProfile})
+        mock.onPost('auth/login', formData).reply(200, {...response})
 
-        return store.dispatch(loginTC(formData)).then(() => {
-            const expectedActions:(LoginActions | ReturnType<typeof setProfile>)[]= [
-                {
-                    type: loginSetLoadingType,
-                    loading: true
-                },
-                {
-                    type: setProfileType,
-                    profile: testProfile
-                },
-                {
-                    type: loginSetSuccessType,
-                    success: true
-                },
-                {
-                    type: loginSetErrorType,
-                    error: ''
-                },
-                {
-                    type: loginSetLoadingType,
-                    loading: false
-                }
-            ]
-            expect(store.getActions()).toEqual(expectedActions)
-        })
+        await store.dispatch(loginTC(formData))
+        const expectedActions: (LoginActionsType | ProfileActionsType)[] = [
+            {
+                type: 'login/SET-LOADING',
+                payload: {loading: true}
+            },
+            {
+                type: 'profile/SET_PROFILE',
+                payload:{profile: response}
+            },
+            {
+                type: 'login/SET-SUCCESS',
+                payload: {success: true}
+            },{
+                type: 'login/SET-ERROR',
+                payload: {error: ''}
+            },
+            {
+                type: 'login/SET-LOADING',
+                payload: {loading: false}
+            }
+        ]
+        expect(store.getActions()).toEqual(expectedActions)
+    })
+
+    it('when login failed', async () => {
+        const response = {
+            error: 'test error'
+        }
+        const formData: LoginFormDataType = {
+            email: 'test@mail.tu',
+            password: '1234',
+            rememberMe: false
+        }
+        mock.onPost('auth/login', formData).reply(400, {...response})
+
+        await store.dispatch(loginTC(formData))
+        const expectedActions: LoginActionsType[] = [
+            {
+                type: 'login/SET-LOADING',
+                payload: {loading: true}
+            },
+            {
+                type: 'login/SET-ERROR',
+                payload: {error: response.error}
+            },
+            {
+                type: 'login/SET-SUCCESS',
+                payload: {success: false}
+            },
+            {
+                type: 'login/SET-LOADING',
+                payload: {loading: false}
+            }
+        ]
+        expect(store.getActions()).toEqual(expectedActions)
     })
 })

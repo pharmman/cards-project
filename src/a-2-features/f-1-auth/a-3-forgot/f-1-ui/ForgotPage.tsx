@@ -7,6 +7,11 @@ import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {setIsMessageSent} from '../f-2-bll/forgotActions'
 import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 
+
+type ForgotFormDataType = {
+    email:string
+}
+
 export const ForgotPage: React.FC = () => {
     const error = useSelector<AppRootStateType, string>(state => state.app.error)
     const isMessageSent = useSelector<AppRootStateType, boolean>(state => state.forgot.isMessageSent)
@@ -18,7 +23,7 @@ export const ForgotPage: React.FC = () => {
         offset: {span: 2}
     }
 
-    const onSubmit = (data: { email: string }) => {
+    const onSubmit = (data: ForgotFormDataType) => {
         dispatch(sendMessageTC(data.email))
     }
 

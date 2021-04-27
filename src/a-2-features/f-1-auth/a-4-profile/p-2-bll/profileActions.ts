@@ -1,14 +1,11 @@
 import {ProfileType} from '../../a-1-login/l-3-dal/LoginAPI'
+import {InferActionsType} from '../../../../a-1-main/m-2-bll/Actions'
 
-export type ProfileActionsType =
-    ReturnType<typeof setProfile>
-    | ReturnType<typeof setSuccess>
-    | ReturnType<typeof setError>
+export type ProfileActionsType = InferActionsType<typeof profileActions>
 
-export const setProfileType = 'profile/SET_PROFILE'
-export const setProfileSuccessType = 'profile/SET_SUCCESS'
-export const setProfileErrorType = 'profile/SET_ERROR'
-
-export const setProfile = (profile: ProfileType) => ({type: 'profile/SET_PROFILE', profile} as const)
-export const setSuccess = (success: boolean) => ({type: 'profile/SET_SUCCESS', success} as const)
-export const setError = (error: string) => ({type: 'profile/SET_ERROR', error} as const)
+export const profileActions = {
+    setProfile: (profile: ProfileType) => ({type: 'profile/SET_PROFILE', payload: {profile}} as const),
+    setLoading: (loading:boolean) => ({type: 'profile/SET_LOADING', payload: {loading}} as const),
+    setSuccess: (success: boolean) => ({type: 'profile/SET_SUCCESS', payload: {success}} as const),
+    setError: (error: string) => ({type: 'profile/SET_ERROR', payload: {error}} as const)
+}

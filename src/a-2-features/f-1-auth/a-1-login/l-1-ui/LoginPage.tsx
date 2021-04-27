@@ -8,8 +8,8 @@ import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 
 
 export interface FormDataType {
-    email: string;
-    password: string;
+    email: string
+    password: string
 }
 
 export interface LoginFormDataType extends FormDataType {

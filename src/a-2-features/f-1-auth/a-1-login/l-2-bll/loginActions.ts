@@ -1,12 +1,9 @@
-export type LoginActions =
-    | ReturnType<typeof loginSetSuccess>
-    | ReturnType<typeof loginSetLoading>
-    | ReturnType<typeof loginSetError>
+import {InferActionsType} from '../../../../a-1-main/m-2-bll/Actions'
 
-export const loginSetSuccessType = 'login/SET-SUCCESS'
-export const loginSetLoadingType = 'login/SET-LOADING'
-export const loginSetErrorType = 'login/SET-ERROR'
+export type LoginActionsType = InferActionsType<typeof loginActions>
 
-export const loginSetSuccess = (success: boolean) => ({type: loginSetSuccessType, success} as const)
-export const loginSetLoading = (loading: boolean) => ({type: loginSetLoadingType, loading} as const)
-export const loginSetError = (error: string) => ({type: loginSetErrorType, error} as const)
+export const loginActions = {
+    setSuccess: (success: boolean) => ({type: 'login/SET-SUCCESS', payload: {success}} as const),
+    setLoading: (loading: boolean) => ({type: 'login/SET-LOADING', payload: {loading}} as const),
+    setError: (error: string) => ({type: 'login/SET-ERROR', payload: {error}} as const)
+}

@@ -3,15 +3,15 @@ import {registerTC} from '../../r-2-bll/registerThunks'
 import {RegisterActionsType} from '../../r-2-bll/registerActions'
 import {mock, store} from '../../../../../a-1-main/m-4-tests/mock'
 
-describe('Register thunks, dispatches a login request', () => {
+describe('Register thunks, dispatches a register request', () => {
     beforeEach(() => {
         store.clearActions()
         mock.reset()
     })
-    it('when login succeeds', async () => {
+    it('when register succeeds', async () => {
         const formData: FormDataType = {
             email: 'test@mail.tu',
-            password: '1234',
+            password: '1234'
         }
         mock.onPost('auth/register', formData).reply(200)
 
@@ -37,7 +37,7 @@ describe('Register thunks, dispatches a login request', () => {
         expect(store.getActions()).toEqual(expectedActions)
     })
 
-    it('when login failed', async () => {
+    it('when register failed', async () => {
         const response = {
             error: 'test error'
         }

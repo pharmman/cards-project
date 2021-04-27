@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {Button, Card, Col, Form, Input, message, Row} from 'antd'
 import {Redirect} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
@@ -7,8 +7,12 @@ import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 import 'antd/dist/antd.css'
 import {registerTC} from '../r-2-bll/registerThunks'
 import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
-import {setAppError} from '../../../../a-1-main/m-2-bll/appActions'
 import {FormDataType} from '../../a-1-login/l-1-ui/LoginPage'
+
+//ant-design styles
+const layout = {
+    offset: {span: 2}
+}
 
 export const RegisterPage: React.FC = () => {
     const dispatch = useDispatch()
@@ -28,13 +32,9 @@ export const RegisterPage: React.FC = () => {
     //     }
     // }, [success, redirect, first, dispatch])
 
+    //form submit
     const onSubmit = (data: FormDataType) => {
-        dispatch(registerTC(data.email, data.password))
-    }
-
-    //ant-design styles
-    const layout = {
-        offset: {span: 2}
+        dispatch(registerTC(data))
     }
 
     //pop-up if error

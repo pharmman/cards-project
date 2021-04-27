@@ -1,6 +1,16 @@
 import {instance} from '../../../../a-1-main/m-3-dal/instance'
 
-const messageForRecoveryPassword =
+type ForgotResponseType = {
+    info?:string
+    error?:string
+}
+
+export type NewPasswordRequestDataType = {
+    password: string
+    resetPasswordToken: string
+}
+
+export const messageForRecoveryPassword =
     `<div>
        To recover your password, follow the link:
         <br/> 
@@ -9,15 +19,20 @@ const messageForRecoveryPassword =
            </a>
      </div>`
 
+export const forgotRequestBody = (email:string) => {
+    return {
+        email,
+        from: "Aleksandr Rasskazov<pharm.sale777@gmail.com>",
+        message: messageForRecoveryPassword
+    }
+
+}
+
 export const ForgotAPI = {
     forgot(email:string){
-        return instance.post('/auth/forgot', {
-            email,
-            from: "Aleksandr Rasskazov<pharm.sale777@gmail.com>",
-            message: messageForRecoveryPassword
-        })
+        return instance.post<ForgotResponseType>('auth/forgot', {...forgotRequestBody(email)})
     },
-    setNewPassword(password: string, resetPasswordToken: string){
-        return instance.post<{info:string, error?:string}>('/auth/set-new-password', {password, resetPasswordToken})
+    setNewPassword(data:NewPasswordRequestDataType){
+        return instance.post<ForgotResponseType>('auth/set-new-password', {...data})
     }
 }

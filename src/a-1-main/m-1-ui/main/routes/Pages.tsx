@@ -1,9 +1,9 @@
 import React, {ReactNode} from "react";
 import { Redirect } from "react-router-dom";
-import {ForgotPage} from "../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/ForgotPage";
+import {ForgotPage} from "../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/u-1-forgotPage/ForgotPage";
 import {RegisterPage} from "../../../../a-2-features/f-1-auth/a-2-register/r-1-ui/RegisterPage";
 import {LoginPage} from "../../../../a-2-features/f-1-auth/a-1-login/l-1-ui/LoginPage";
-import {NewPasswordPage} from '../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/NewPasswordPage'
+import {NewPasswordPage} from '../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/u-2-newPasswordPage/NewPasswordPage'
 import {ProfilePage} from '../../../../a-2-features/f-1-auth/a-4-profile/p-1-ui/ProfilePage'
 import {LoginRedirect} from '../../../../a-3-common/c-2-loginRedirect/LoginRedirect'
 

@@ -7,8 +7,7 @@ import MockAdapter from 'axios-mock-adapter'
 import {instance} from '../../../../../a-1-main/m-3-dal/instance'
 import {LoginFormDataType} from '../../l-1-ui/LoginPage'
 import {LoginActionsType} from '../../l-2-bll/loginActions'
-import {ProfileType} from '../../l-3-dal/LoginAPI'
-import {ProfileActionsType} from '../../../a-4-profile/p-2-bll/profileActions'
+import {ProfileActionsType, ProfileType} from '../../../a-4-profile/p-2-bll/profileActions'
 import {mock, store} from '../../../../../a-1-main/m-4-tests/mock'
 
 describe('Login thunks, dispatches a login request', () => {

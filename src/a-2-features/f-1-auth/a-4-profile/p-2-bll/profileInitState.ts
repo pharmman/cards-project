@@ -1,4 +1,4 @@
-import {ProfileType} from '../../a-1-login/l-3-dal/LoginAPI'
+import {ProfileType} from './profileActions'
 
 export type ProfileStateType = {
     profile:ProfileType | null

@@ -5,10 +5,19 @@ import {Button, Card, Checkbox, Col, Form, Input, message, Row} from 'antd'
 import {NavLink, Redirect} from 'react-router-dom'
 import {loginTC} from '../l-2-bll/loginThunks'
 import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
+import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
 
 export interface FormDataType {
     email: string
     password: string
+}
+
+//ant-design styles
+const layout = {
+    labelCol: {span: 24}
+}
+const startLayout = {
+    wrapperCol: {span: 14}
 }
 
 export interface LoginFormDataType extends FormDataType {
@@ -16,19 +25,14 @@ export interface LoginFormDataType extends FormDataType {
 }
 
 export const LoginPage: React.FC = () => {
+
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string>(state => state.login.error)
     const loading = useSelector<AppRootStateType, boolean>(state => state.login.loading)
     const loginSuccess = useSelector<AppRootStateType, boolean>(state => state.login.success)
 
-    //ant-design styles
-    const layout = {
-        labelCol: {span: 24}
-    }
-    const startLayout = {
-        wrapperCol: {span: 14}
-    }
 
+    //form submit
     const onSubmit = (data: LoginFormDataType) => {
         dispatch(loginTC({...data}))
     }
@@ -45,7 +49,7 @@ export const LoginPage: React.FC = () => {
     }
 
     if (loginSuccess && !error) {
-        return <Redirect to={'/profile'}/>
+        return <Redirect to={PATH.PROFILE}/>
     }
 
     return (

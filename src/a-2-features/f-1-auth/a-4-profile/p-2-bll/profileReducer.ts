@@ -1,16 +1,13 @@
 import {profileInitState, ProfileStateType} from './profileInitState'
 import {ProfileActionsType} from './profileActions'
-import {ProfileType} from '../../a-1-login/l-3-dal/LoginAPI'
 
 export const profileReducer = (state = profileInitState, action: ProfileActionsType): ProfileStateType => {
     switch (action.type) {
         case 'profile/SET_PROFILE':
         case 'profile/SET_LOADING':
-            return {...state, ...action.payload}
         case 'profile/SET_ERROR':
-            return {...state, ...action.payload, success: false}
         case 'profile/SET_SUCCESS':
-            return {...state, ...action.payload, error:''}
+            return {...state, ...action.payload}
         default:
             return state
     }

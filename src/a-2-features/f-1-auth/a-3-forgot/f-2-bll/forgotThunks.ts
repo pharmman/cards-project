@@ -1,32 +1,35 @@
 import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
-import {ForgotAPI} from '../f-3-dal/ForgotAPI'
-import {setNewPasswordInstalled, setIsMessageSent} from './forgotActions'
-import {setAppError, setIsFetching} from '../../../../a-1-main/m-2-bll/appActions'
+import {ForgotAPI, NewPasswordRequestDataType} from '../f-3-dal/ForgotAPI'
+import {forgotActions, ForgotActionsType} from './forgotActions'
 
-export const sendMessageTC = (email: string): ThunkType => async (dispatch) => {
-    dispatch(setIsFetching(true))
+export const sendEmailTC = (email: string): ThunkType<ForgotActionsType> => async (dispatch) => {
+    dispatch(forgotActions.setLoading(true))
     try {
         await ForgotAPI.forgot(email)
-        dispatch(setIsMessageSent(true))
+        dispatch(forgotActions.setError(''))
+        dispatch(forgotActions.setSuccessEmailSent(true))
     } catch (e) {
-        const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppError(error))
+        const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
+        dispatch(forgotActions.setError(error))
+        dispatch(forgotActions.setSuccessEmailSent(false))
         console.log('Error:', {...e})
     } finally {
-        dispatch(setIsFetching(false))
+        dispatch(forgotActions.setLoading(false))
     }
 }
 
-export const setNewPasswordTC = (email:string, token:string):ThunkType => async (dispatch) => {
-    dispatch(setIsFetching(true))
+export const setNewPasswordTC = (data:NewPasswordRequestDataType):ThunkType<ForgotActionsType> => async (dispatch) => {
+    dispatch(forgotActions.setLoading(true))
     try {
-        await ForgotAPI.setNewPassword(email, token)
-        dispatch(setNewPasswordInstalled(true))
+        await ForgotAPI.setNewPassword(data)
+        dispatch(forgotActions.setError(''))
+        dispatch(forgotActions.setSuccessNewPasswordInstalled(true))
     } catch (e) {
-        const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppError(error))
+        const error = e.response ? e.response.data.error : 'Some error occurred'
+        dispatch(forgotActions.setError(error))
+        dispatch(forgotActions.setSuccessNewPasswordInstalled(false))
         console.log('Error:', {...e})
     } finally {
-        dispatch(setIsFetching(false))
+        dispatch(forgotActions.setLoading(false))
     }
 }

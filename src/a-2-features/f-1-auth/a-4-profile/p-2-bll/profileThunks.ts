@@ -1,23 +1,22 @@
 import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
-import {setAppError, setIsFetching} from '../../../../a-1-main/m-2-bll/appActions'
-import {setProfile, setSuccess} from './profileActions'
 import {ProfileAPI} from '../p-3-dal/ProfileAPI'
+import {profileActions, ProfileActionsType} from './profileActions'
 
-export const authMeTC = ():ThunkType => async (dispatch) => {
-    dispatch(setIsFetching(true))
+export const authMeTC = ():ThunkType<ProfileActionsType> => async (dispatch) => {
+    dispatch(profileActions.setLoading(true))
     try {
         const res = await ProfileAPI.authMe()
-        dispatch(setProfile(res.data))
-        dispatch(setSuccess(true))
-        dispatch(setAppError(''))
+        dispatch(profileActions.setProfile(res.data))
+        dispatch(profileActions.setSuccess(true))
+        dispatch(profileActions.setError(''))
     }
     catch (e) {
         const error = e.response? e.response.data.error : (e.message + ', more details in the console')
-        dispatch(setAppError(error))
-        dispatch(setSuccess(false))
+        dispatch(profileActions.setError(error))
+        dispatch(profileActions.setSuccess(false))
         console.log('Error:', {...e})
     }
     finally {
-        dispatch(setIsFetching(false))
+        dispatch(profileActions.setLoading(false))
     }
 }

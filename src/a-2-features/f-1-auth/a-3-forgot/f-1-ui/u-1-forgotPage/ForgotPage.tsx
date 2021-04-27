@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Card, Col, Form, Input, message, Row, Typography} from 'antd'
+import {Button, Card, Col, Form, Input, message, Row} from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
 import {sendEmailTC} from '../../f-2-bll/forgotThunks'
 import Title from 'antd/es/typography/Title'

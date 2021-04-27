@@ -19,18 +19,6 @@ export const RegisterPage: React.FC = () => {
     const error = useSelector<AppRootStateType, string>(state => state.register.error)
     const loading = useSelector<AppRootStateType, boolean>(state => state.register.loading)
     const success = useSelector<AppRootStateType, boolean>(state => state.register.success)
-    // const [redirect, setRedirect] = useState<boolean>(false)
-    // const [first, setFirst] = useState<boolean>(true)
-
-    // useEffect(() => {
-    //     if (first) {
-    //         setFirst(false)
-    //     } else {
-    //         if (!redirect && success) {
-    //             setRedirect(true)
-    //         }
-    //     }
-    // }, [success, redirect, first, dispatch])
 
     //form submit
     const onSubmit = (data: FormDataType) => {

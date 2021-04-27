@@ -1,9 +1,8 @@
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {ProfileType} from '../p-2-bll/profileActions'
 
 export const ProfilePage = () => {
-    const dispatch = useDispatch()
     const profile = useSelector<AppRootStateType, ProfileType | null>(state => state.profile.profile)
 
 

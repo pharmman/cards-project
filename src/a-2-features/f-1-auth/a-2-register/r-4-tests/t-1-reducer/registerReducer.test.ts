@@ -2,7 +2,7 @@ import {RegisterStateType} from '../../r-2-bll/registerInitState'
 import {registerReducer} from '../../r-2-bll/registerReducer'
 import {registerActions} from '../../r-2-bll/registerActions'
 
-describe('Register Reducer test', () => {
+describe('Register reducer test', () => {
     let state: RegisterStateType
     beforeEach(() => {
         state = {

@@ -5,7 +5,6 @@ import {Redirect} from 'react-router-dom'
 import {PATH} from '../../a-1-main/m-1-ui/main/routes/Pages'
 import {Preloader} from '../c-1-preloader/Preloader'
 import {authMeTC} from '../../a-2-features/f-1-auth/a-4-profile/p-2-bll/profileThunks'
-import {ProfileType} from '../../a-2-features/f-1-auth/a-4-profile/p-2-bll/profileActions'
 
 type DivPropsType = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 type LoginRedirectPagePropsType = DivPropsType & {}

@@ -7,6 +7,7 @@ import {Redirect, useParams} from 'react-router-dom'
 import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 import {Preloader} from '../../../../../a-3-common/c-1-preloader/Preloader'
 import {PATH} from '../../../../../a-1-main/m-1-ui/main/routes/Pages'
+import {setNewPasswordTC} from '../../f-2-bll/forgotThunks'
 
 type NewPasswordFormDataType = {
     password: string
@@ -25,7 +26,7 @@ export const NewPasswordPage = () => {
 
     //form submit action
     const onSubmit = (data: NewPasswordFormDataType) => {
-        // dispatch(setNewPasswordTC(data.password, token))
+        dispatch(setNewPasswordTC({password: data.password, resetPasswordToken: token}))
     }
 
     //pop-up error
@@ -44,37 +45,37 @@ export const NewPasswordPage = () => {
     return (
         <div className="site-card-border-less-wrapper">
             <Row justify={'center'} align={'top'}>
-                    <Col span={10}>
-                        <Card>
-                            <Title level={3}>
-                                Enter your email address and click the button. We will be sent to you
-                                email
-                                with a link to reset your password
-                            </Title>
-                            <Form layout={'vertical'} onFinish={onSubmit}>
-                                <Form.Item
-                                    label={'Password'}
-                                    name="password"
-                                    rules={[
-                                        {
-                                            min: 8,
-                                            message: 'Password must be 8 characters or more'
-                                        }
-                                    ]}>
-                                    <Input.Password size={'large'}/>
-                                </Form.Item>
-                                <Form.Item>
-                                    <Col span={24} style={{textAlign: 'left'}}>
-                                        <Button size={'large'} type="primary"
-                                                htmlType="submit">
-                                            Set new password
-                                        </Button>
-                                    </Col>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </Col>
-                </Row>
+                <Col span={10}>
+                    <Card>
+                        <Title level={3}>
+                            Enter your email address and click the button. We will be sent to you
+                            email
+                            with a link to reset your password
+                        </Title>
+                        <Form layout={'vertical'} onFinish={onSubmit}>
+                            <Form.Item
+                                label={'Password'}
+                                name="password"
+                                rules={[
+                                    {
+                                        min: 8,
+                                        message: 'Password must be 8 characters or more'
+                                    }
+                                ]}>
+                                <Input.Password size={'large'}/>
+                            </Form.Item>
+                            <Form.Item>
+                                <Col span={24} style={{textAlign: 'left'}}>
+                                    <Button size={'large'} type="primary"
+                                            htmlType="submit">
+                                        Set new password
+                                    </Button>
+                                </Col>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                </Col>
+            </Row>
         </div>
     )
 }

@@ -7,30 +7,44 @@ describe('Login Reducer test', () => {
     let state: LoginStateType
     beforeEach(() => {
         state = {
-            success: false,
+            loginSuccess: false,
             error: '',
-            loading: false
+            loading: false,
+            logoutSuccess: false
         }
     })
     it('success should change', () => {
-        const newState = loginReducer(state, loginActions.setSuccess(true))
+        const newState = loginReducer(state, loginActions.setLoginSuccess(true))
 
         expect(newState.error).toBe('')
-        expect(newState.success).toBeTruthy()
+        expect(newState.loginSuccess).toBeTruthy()
+        expect(newState.logoutSuccess).toBeFalsy()
         expect(newState.loading).toBeFalsy()
     })
     it('error should change', () => {
         const newState = loginReducer(state, loginActions.setError('Test error'))
 
         expect(newState.error).toBe('Test error')
-        expect(newState.success).toBeFalsy()
+        expect(newState.loginSuccess).toBeFalsy()
+        expect(newState.logoutSuccess).toBeFalsy()
         expect(newState.loading).toBeFalsy()
     })
     it('loading should change', () => {
         const newState = loginReducer(state, loginActions.setLoading(true))
 
         expect(newState.error).toBe('')
-        expect(newState.success).toBeFalsy()
+        expect(newState.logoutSuccess).toBeFalsy()
+        expect(newState.loginSuccess).toBeFalsy()
         expect(newState.loading).toBeTruthy()
     })
+    it('logout success should change',  () => {
+        const newState = loginReducer(state, loginActions.setLogoutSuccess(true))
+
+        expect(newState.error).toBe('')
+        expect(newState.loginSuccess).toBeFalsy()
+        expect(newState.loading).toBeFalsy()
+        expect(newState.logoutSuccess).toBeTruthy()
+    })
 })
+
+

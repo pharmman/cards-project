@@ -1,4 +1,4 @@
-import {FormDataType} from '../../../a-1-login/l-1-ui/LoginPage'
+import {FormDataType} from '../../../a-1-login/l-1-ui/u-1-login/LoginPage'
 import {registerTC} from '../../r-2-bll/registerThunks'
 import {RegisterActionsType} from '../../r-2-bll/registerActions'
 import {mock, store} from '../../../../../a-1-main/m-4-tests/mock'

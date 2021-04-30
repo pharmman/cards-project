@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
+import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 import {Button, Card, Checkbox, Col, Form, Input, message, Row} from 'antd'
 import {NavLink, Redirect} from 'react-router-dom'
-import {loginTC} from '../l-2-bll/loginThunks'
-import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
-import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
+import {loginTC} from '../../l-2-bll/loginThunks'
+import {Preloader} from '../../../../../a-3-common/c-1-preloader/Preloader'
+import {PATH} from '../../../../../a-1-main/m-1-ui/main/routes/Pages'
 
 export interface FormDataType {
     email: string

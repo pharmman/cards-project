@@ -1,6 +1,6 @@
 import {instance} from '../../../../a-1-main/m-3-dal/instance'
 
-type ForgotResponseType = {
+export type InfoResponseType = {
     info?:string
     error?:string
 }
@@ -30,9 +30,9 @@ export const forgotRequestBody = (email:string) => {
 
 export const ForgotAPI = {
     forgot(email:string){
-        return instance.post<ForgotResponseType>('auth/forgot', {...forgotRequestBody(email)})
+        return instance.post<InfoResponseType>('auth/forgot', {...forgotRequestBody(email)})
     },
     setNewPassword(data:NewPasswordRequestDataType){
-        return instance.post<ForgotResponseType>('auth/set-new-password', {...data})
+        return instance.post<InfoResponseType>('auth/set-new-password', {...data})
     }
 }

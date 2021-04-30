@@ -2,7 +2,8 @@ export type LoginStateType = typeof loginInitState
 
 
 export const loginInitState = {
-    success: false,
+    loginSuccess: false,
     error: '',
-    loading: false
+    loading: false,
+    logoutSuccess: false
 }

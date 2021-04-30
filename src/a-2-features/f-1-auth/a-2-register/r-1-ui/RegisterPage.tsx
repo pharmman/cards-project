@@ -7,7 +7,7 @@ import {Preloader} from '../../../../a-3-common/c-1-preloader/Preloader'
 import 'antd/dist/antd.css'
 import {registerTC} from '../r-2-bll/registerThunks'
 import {PATH} from '../../../../a-1-main/m-1-ui/main/routes/Pages'
-import {FormDataType} from '../../a-1-login/l-1-ui/LoginPage'
+import {FormDataType} from '../../a-1-login/l-1-ui/u-1-login/LoginPage'
 
 //ant-design styles
 const layout = {

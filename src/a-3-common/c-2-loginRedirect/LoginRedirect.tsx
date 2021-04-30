@@ -11,18 +11,21 @@ type LoginRedirectPagePropsType = DivPropsType & {}
 
 export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, ...restProps}) => {
 
+    const dispatch = useDispatch()
     const [first, setFirst] = useState<boolean>(true)
     const [redirect, setRedirect] = useState<boolean>(false)
-    const dispatch = useDispatch()
     const {profile, error, success} = useSelector((state: AppRootStateType) => state.profile)
-    const [isFetching, setIsFetching] = useState<boolean>(profile === null)
+    const loginLoading = useSelector<AppRootStateType, boolean>(state => state.login.loading)
+    const logoutSuccess = useSelector<AppRootStateType, boolean>(state => state.login.logoutSuccess)
+    const [isFetching, setIsFetching] = useState<boolean>( profile === null)
+
 
     useEffect(() => {
         if (first) {
             dispatch(authMeTC())
             setFirst(false)
         } else {
-            if (!profile && success && !error) {
+            if (!profile && (!success || logoutSuccess) && !error) {
                 setRedirect(true)
                 setIsFetching(false)
             } else {
@@ -30,12 +33,12 @@ export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, .
                 setRedirect(false)
             }
         }
-    }, [first, dispatch, redirect, profile, success, error])
+    }, [first, dispatch, redirect, profile, success, error, logoutSuccess])
 
     if (redirect) {
         return <Redirect to={PATH.LOGIN}/>
     }
-    if (isFetching) {
+    if (isFetching || loginLoading) {
         return <Preloader/>
     }
 

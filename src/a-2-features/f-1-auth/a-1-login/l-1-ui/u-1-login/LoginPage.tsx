@@ -29,7 +29,7 @@ export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
     const error = useSelector<AppRootStateType, string>(state => state.login.error)
     const loading = useSelector<AppRootStateType, boolean>(state => state.login.loading)
-    const loginSuccess = useSelector<AppRootStateType, boolean>(state => state.login.success)
+    const loginSuccess = useSelector<AppRootStateType, boolean>(state => state.login.loginSuccess)
 
 
     //form submit

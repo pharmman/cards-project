@@ -7,7 +7,7 @@ import {profileReducer} from '../../a-2-features/f-1-auth/a-4-profile/p-2-bll/pr
 import {forgotReducer} from '../../a-2-features/f-1-auth/a-3-forgot/f-2-bll/forgotReducer'
 import {LoginActionsType} from '../../a-2-features/f-1-auth/a-1-login/l-2-bll/loginActions'
 
-const appReducer = combineReducers({
+const mainReducer = combineReducers({
     login: loginReducer,
     register: registerReducer,
     profile: profileReducer,
@@ -16,16 +16,16 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: AppRootStateType | undefined, action: LoginActionsType) => {
     if (action.type === 'login/SET_LOGOUT_SUCCESS') {
-        return appReducer(undefined, action)
+        return mainReducer(undefined, action)
     }
 
-    return appReducer(state, action)
+    return mainReducer(state, action)
 }
 
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-export type AppRootStateType = ReturnType<typeof appReducer>
+export type AppRootStateType = ReturnType<typeof mainReducer>
 
 // @ts-ignore
 window.store = store

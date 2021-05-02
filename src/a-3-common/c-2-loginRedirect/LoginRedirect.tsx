@@ -39,6 +39,7 @@ export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, .
         return <Redirect to={PATH.LOGIN}/>
     }
     if (isFetching || loginLoading) {
+        debugger
         return <Preloader/>
     }
 

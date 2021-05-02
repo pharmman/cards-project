@@ -15,6 +15,7 @@ export const ProfilePage = () => {
                 </div>
             ))}
             )
+            <LogoutComponent/>
         </div>
     )
 }

@@ -6,7 +6,6 @@ import {LogoutComponent} from '../../a-1-login/l-1-ui/u-2-logout/LogoutComponent
 export const ProfilePage = () => {
     const profile = useSelector<AppRootStateType, ProfileType | null>(state => state.profile.profile)
 
-
     return (
         <div>
             {profile && Object.entries(profile).map((e, index) => (

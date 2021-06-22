@@ -42,3 +42,19 @@
   background: #ececec;
   min-height: 100vh;
 }
+
+.form-button {
+  margin-bottom: 24px;
+}
+
+.formCardMinWidth {
+  min-width: 300px
+}
+
+.formCardMaxWidth {
+  max-width: 300px
+}
+
+.formParagraph {
+  text-align: left;
+}

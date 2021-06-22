@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
-import {Button, Card, Checkbox, Col, Form, Input, message, Row} from 'antd'
+import {Button, Card, Checkbox, Form, Input, message, Row} from 'antd'
 import {NavLink, Redirect} from 'react-router-dom'
 import {loginTC} from '../../l-2-bll/loginThunks'
 import {Preloader} from '../../../../../a-3-common/c-1-preloader/Preloader'
 import {PATH} from '../../../../../a-1-main/m-1-ui/main/routes/Pages'
+import Title from 'antd/es/typography/Title'
 
 export interface FormDataType {
     email: string
@@ -13,11 +14,8 @@ export interface FormDataType {
 }
 
 //ant-design styles
-const layout = {
-    labelCol: {span: 24}
-}
 const startLayout = {
-    wrapperCol: {span: 14}
+    wrapperCol: {span: 12}
 }
 
 export interface LoginFormDataType extends FormDataType {
@@ -55,54 +53,54 @@ export const LoginPage: React.FC = () => {
     return (
         <div className={'site-card-border-less-wrapper'}>
             <Row justify={'center'} align={'top'}>
-                <h1>Card Project</h1>
+                <Title level={1}>Card Project</Title>
             </Row>
             <Row justify={'center'} align={'middle'}>
-                <Card size={'default'}>
-                    <Col span={24}>
-                        <Form {...layout} layout={'vertical'} onFinish={onSubmit} initialValues={{rememberMe: true}}>
-                            <Form.Item
-                                label={'Email'}
-                                name="email"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your E-mail!'
-                                    }
-                                ]}
-                            >
-                                <Input size={'large'}/>
-                            </Form.Item>
-                            <Form.Item
-                                label={'Password'}
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your password!'
-                                    }
-                                ]}>
-                                <Input.Password autoComplete={'on'} size={'large'}/>
-                            </Form.Item>
-                            <Form.Item {...startLayout} name={'rememberMe'} valuePropName={'checked'}>
-                                <Checkbox>Remember me</Checkbox>
-                            </Form.Item>
-                            <Form.Item>
-                                <NavLink to={'/forgot'}>
-                                    Forgot password
-                                </NavLink>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button size={'large'} style={{width: '100%'}} type="primary" htmlType="submit"
-                                        className="login-form-button">
-                                    Log In
-                                </Button>
-                            </Form.Item>
-                            <Form.Item>
-                                Or <NavLink to={'/register'}>register now!</NavLink>
-                            </Form.Item>
-                        </Form>
-                    </Col>
+                <Card className={'formCardMinWidth'}>
+                    <Form layout={'vertical'} onFinish={onSubmit} initialValues={{rememberMe: true}}>
+                        <Form.Item
+                            label={'Email'}
+                            name="email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your E-mail!'
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Invalid email address'
+                                }
+                            ]}
+                        >
+                            <Input size={'large'}/>
+                        </Form.Item>
+                        <Form.Item
+                            label={'Password'}
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your password!'
+                                }
+                            ]}>
+                            <Input.Password autoComplete={'on'} size={'large'}/>
+                        </Form.Item>
+                        <Form.Item {...startLayout} name={'rememberMe'} valuePropName={'checked'}>
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+                        <Form.Item>
+                            <NavLink to={'/forgot'}>
+                                Forgot password
+                            </NavLink>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button block size={'large'} type="primary" htmlType="submit"
+                                    className="form-button">
+                                Log In
+                            </Button>
+                            Or <NavLink to={PATH.REGISTER}>register now!</NavLink>
+                        </Form.Item>
+                    </Form>
                 </Card>
             </Row>
         </div>

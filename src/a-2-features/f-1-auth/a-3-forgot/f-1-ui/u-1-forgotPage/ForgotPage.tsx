@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Card, Col, Form, Input, message, Row} from 'antd'
+import {Button, Card, Form, Input, message, Row} from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
 import {sendEmailTC} from '../../f-2-bll/forgotThunks'
 import Title from 'antd/es/typography/Title'
@@ -7,6 +7,9 @@ import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 import {Preloader} from '../../../../../a-3-common/c-1-preloader/Preloader'
 import {forgotActions} from '../../f-2-bll/forgotActions'
 import {MessageSentFeedback} from './MessageSentFeedback'
+import Paragraph from 'antd/es/typography/Paragraph'
+import {PATH} from '../../../../../a-1-main/m-1-ui/main/routes/Pages'
+import {NavLink} from 'react-router-dom'
 
 export type ForgotFormDataType = {
     email: string
@@ -19,10 +22,6 @@ export const ForgotPage: React.FC = () => {
     const dispatch = useDispatch()
     const [timeForNextTry, setTimeForNextTry] = useState<number>(60)
 
-    //ant-design style
-    const layout = {
-        offset: {span: 2}
-    }
     //form submit action
     const onSubmit = (data: ForgotFormDataType) => {
         dispatch(sendEmailTC(data.email))
@@ -59,38 +58,39 @@ export const ForgotPage: React.FC = () => {
     return (
         <div className="site-card-border-less-wrapper">
             <Row justify={'center'} align={'top'}>
-                <Title>Forgot your password? Let's get you a new one</Title>
-                <Row justify={'center'}>
-                    <Col span={10}>
-                        <Card>
-                            <Title level={3}>Enter your email address and click the button. We will be sent to you
-                                email
-                                with a link to reset your password.
-                            </Title>
-                            <Form layout={'vertical'} onFinish={onSubmit}>
-                                <Form.Item
-                                    label={'Email'}
-                                    name="email"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please input your E-mail!'
-                                        }
-                                    ]}>
-                                    <Input size={'large'}/>
-                                </Form.Item>
-                                <Form.Item>
-                                    <Col span={24} style={{textAlign: 'left'}}>
-                                        <Button size={'large'} type="primary"
-                                                htmlType="submit" {...layout}>
-                                            Send email
-                                        </Button>
-                                    </Col>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </Col>
-                </Row>
+                <Title level={1}>Password assistance</Title>
+            </Row>
+            <Row justify={'center'}>
+                <Card>
+                    <Paragraph className={'formParagraph'}>
+                        Enter your email. We will sent to you
+                        email with a link to reset your password.
+                    </Paragraph>
+                    <Form layout={'vertical'} onFinish={onSubmit}>
+                        <Form.Item
+                            label={'Email'}
+                            name="email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your E-mail!'
+                                },
+                                {
+                                    type: 'email',
+                                    message: 'Invalid email address'
+                                }
+                            ]}>
+                            <Input size={'large'}/>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button block className={'form-button'} size={'large'} type="primary"
+                                    htmlType="submit">
+                                Send email
+                            </Button>
+                            <NavLink to={PATH.LOGIN}>Sign-In</NavLink>
+                        </Form.Item>
+                    </Form>
+                </Card>
             </Row>
         </div>
     )

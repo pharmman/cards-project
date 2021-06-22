@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store'
 import MockAdapter from 'axios-mock-adapter'
 import {instance} from '../m-3-dal/instance'
 
+
 type DispatchExts = ThunkDispatch<AppRootStateType, void, AnyAction>;
 
 const middlewares = [thunk]

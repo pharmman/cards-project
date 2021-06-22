@@ -8,5 +8,4 @@ export const Main:React.FC = () => {
         <Routes/>
         </>
     )
-
 }

@@ -19,29 +19,33 @@ export type GetPacksResponseType = {
     pageCount: number
 }
 
-type CreatePackRequestData = {
+export type CreatePackRequestData = {
     name?: string
     deckCover?: string
     private?: boolean
 }
 
-type UpdatePackRequestData = {
+export type UpdatePackRequestData = {
     _id: string
     name?: string
 }
 
 
 export const PacksAPI = {
-    getPack(data: GetPacksRequestData) {
+    getPack(data?: GetPacksRequestData) {
         return instance.get<GetPacksResponseType>('cards/pack', {data})
     },
-    createPack(data: CreatePackRequestData) {
-        return instance.post('cards/pack', {...data})
+    createPack(data?: CreatePackRequestData) {
+        return instance.post('cards/pack', {cardsPack: {
+            ...data
+            }})
     },
     deletePack(packId: string) {
         return instance.delete(`cards/pack?id=${packId}`)
     },
     updatePack(data: UpdatePackRequestData) {
-        return instance.put('cards/pack', {...data})
+        return instance.put('cards/pack', {cardsPack: {
+            ...data
+            }})
     }
 }

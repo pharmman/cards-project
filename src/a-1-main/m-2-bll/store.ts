@@ -6,12 +6,14 @@ import {registerReducer} from '../../a-2-features/f-1-auth/a-2-register/r-2-bll/
 import {profileReducer} from '../../a-2-features/f-1-auth/a-4-profile/p-2-bll/profileReducer'
 import {forgotReducer} from '../../a-2-features/f-1-auth/a-3-forgot/f-2-bll/forgotReducer'
 import {LoginActionsType} from '../../a-2-features/f-1-auth/a-1-login/l-2-bll/loginActions'
+import {packsReducer} from '../../a-2-features/f-2-cards/c-1-packs/p-2-bll/packsReducer'
 
 const mainReducer = combineReducers({
     login: loginReducer,
     register: registerReducer,
     profile: profileReducer,
     forgot: forgotReducer,
+    packs: packsReducer
 })
 
 const rootReducer = (state: AppRootStateType | undefined, action: LoginActionsType) => {

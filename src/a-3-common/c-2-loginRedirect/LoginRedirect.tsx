@@ -14,18 +14,20 @@ export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, .
     const dispatch = useDispatch()
     const [first, setFirst] = useState<boolean>(true)
     const [redirect, setRedirect] = useState<boolean>(false)
-    const {profile, error, success} = useSelector((state: AppRootStateType) => state.profile)
+    const {profile, error, success, loading} = useSelector((state: AppRootStateType) => state.profile)
     const loginLoading = useSelector<AppRootStateType, boolean>(state => state.login.loading)
     const logoutSuccess = useSelector<AppRootStateType, boolean>(state => state.login.logoutSuccess)
-    const [isFetching, setIsFetching] = useState<boolean>( profile === null)
+    const [isFetching, setIsFetching] = useState<boolean>(profile === null)
 
 
     useEffect(() => {
         if (first) {
-            dispatch(authMeTC())
+            if (!profile) {
+                dispatch(authMeTC())
+            }
             setFirst(false)
         } else {
-            if (!profile && (!success || logoutSuccess) && !error) {
+            if (!profile && (!success || logoutSuccess) && !error && !loading) {
                 setRedirect(true)
                 setIsFetching(false)
             } else {
@@ -33,13 +35,12 @@ export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, .
                 setRedirect(false)
             }
         }
-    }, [first, dispatch, redirect, profile, success, error, logoutSuccess])
+    }, [first, dispatch, redirect, profile, success, error, logoutSuccess, loading])
 
     if (redirect) {
         return <Redirect to={PATH.LOGIN}/>
     }
     if (isFetching || loginLoading) {
-        debugger
         return <Preloader/>
     }
 

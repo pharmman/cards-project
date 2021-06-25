@@ -27,7 +27,7 @@ export const LoginRedirect: React.FC<LoginRedirectPagePropsType> = ({children, .
             }
             setFirst(false)
         } else {
-            if (!profile && (!success || logoutSuccess) && !error && !loading) {
+            if (!profile && (!success || logoutSuccess) && error && !loading) {
                 setRedirect(true)
                 setIsFetching(false)
             } else {

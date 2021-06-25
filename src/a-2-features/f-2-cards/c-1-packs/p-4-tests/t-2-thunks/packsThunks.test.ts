@@ -38,7 +38,7 @@ describe('Get packs thunk', () => {
             },
             {
                 type: 'packs/SET_PACKS',
-                payload: {packs: getResponse.cardPacks}
+                payload: {packs: getResponse}
             },
             {
                 type: 'app/SET_ERROR',

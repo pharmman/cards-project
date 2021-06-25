@@ -7,11 +7,11 @@ export type GetPacksRequestData = {
     max?: number
     page?: number
     pageCount?: number
-    userId?: string
+    user_id?: string
 }
 
-export type GetPacksResponseType = {
-    cardPacks: PackType[]
+export interface GetPacksResponseType {
+    cardPacks: PackType[] | null
     cardPacksTotalCount: number
     maxCardsCount: number
     minCardsCount: number
@@ -30,10 +30,14 @@ export type UpdatePackRequestData = {
     name?: string
 }
 
-
 export const PacksAPI = {
-    getPack(data?: GetPacksRequestData) {
-        return instance.get<GetPacksResponseType>('cards/pack', {data})
+    getPacks(data?: GetPacksRequestData) {
+        return instance.get<GetPacksResponseType>('cards/pack', {
+            params: {
+                pageCount: 10,
+                ...data
+            }
+        })
     },
     createPack(data?: CreatePackRequestData) {
         return instance.post('cards/pack', {cardsPack: {

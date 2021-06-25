@@ -1,3 +1,5 @@
+import {GetPacksResponseType} from '../p-3-dal/PacksAPI'
+
 export type PackType = {
     _id: string
     user_id: string
@@ -12,8 +14,16 @@ export type PackType = {
     __v: number
 }
 
-export type PacksStateType = typeof packsInitState
+export interface PacksStateType extends GetPacksResponseType {
+    packsUserId: string
+}
 
-export const packsInitState = {
-    packs: null as PackType[] | null,
+export const packsInitState:PacksStateType = {
+    cardPacks: null,
+    maxCardsCount: 0,
+    page: 1,
+    pageCount: 1,
+    minCardsCount: 1,
+    cardPacksTotalCount: 0,
+    packsUserId: ''
 }

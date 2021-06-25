@@ -4,11 +4,12 @@ import {packsActions, PacksActionsType} from './packsActions'
 import {appActions, AppActionsType} from '../../../f-3-app/a-2-bll/appActions'
 
 
-export const getPacksTC = (data?: GetPacksRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch) => {
+export const getPacksTC = (data?: GetPacksRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch, getState) => {
+    const {packsUserId} = getState().packs
     dispatch(appActions.setLoading(true))
     try {
-        const res = await PacksAPI.getPack(data)
-        dispatch(packsActions.setPacks(res.data.cardPacks))
+        const res = packsUserId ? await PacksAPI.getPacks({...data, user_id: packsUserId}) : await PacksAPI.getPacks(data)
+        dispatch(packsActions.setPacks(res.data))
         dispatch(appActions.setError(''))
     } catch (e) {
         const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
@@ -52,7 +53,7 @@ export const deletePackTC = (packId: string): ThunkType<PacksActionsType | AppAc
 export const updatePack = (data: UpdatePackRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch) => {
     dispatch(appActions.setLoading(true))
     try {
-        await PacksAPI.updatePack(data)
+        await PacksAPI.updatePack({...data})
         dispatch(getPacksTC())
         dispatch(appActions.setError(''))
     } catch (e) {

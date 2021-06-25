@@ -17,19 +17,35 @@ export const packForTests:PackType = {
     user_id: 'testUser'
 }
 
+const testPacksInfo:PacksStateType = {
+    cardPacks: [packForTests],
+    cardPacksTotalCount: 977,
+    pageCount: 10,
+    maxCardsCount: 8,
+    minCardsCount: 4,
+    page: 5,
+    packsUserId: 'test'
+}
+
 describe('Packs reducer test', () => {
     let state: PacksStateType
     let testPack: PackType
     beforeEach(() => {
         state = {
-            packs: null
+            cardPacks: [testPack],
+            cardPacksTotalCount: 1,
+            pageCount: 1,
+            maxCardsCount: 1,
+            minCardsCount: 1,
+            page: 1,
+            packsUserId: ''
         }
         testPack = packForTests
     })
     it('packs should change', () => {
 
-        const newState = packsReducer(state, packsActions.setPacks([testPack]))
+        const newState = packsReducer(state, packsActions.setPacks(testPacksInfo))
 
-        expect(newState).toEqual({packs: [testPack]})
+        expect(newState).toEqual(testPacksInfo)
     })
 })

@@ -8,6 +8,7 @@ import {ProfileType} from '../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
 import {CheckboxChangeEvent} from 'antd/es/checkbox'
 import {packsActions} from '../p-2-bll/packsActions'
 import Column from 'antd/lib/table/Column'
+import Cell from 'antd/es/descriptions/Cell'
 
 const EditableCell: React.FC = ({
                                     children,
@@ -36,7 +37,7 @@ const EditableCell: React.FC = ({
                         }
                     ]}
                 >
-                    <Input onBlur={offEditMode}/>
+                    <Input autoFocus onBlur={offEditMode}/>
                 </Form.Item>
             </td>
             :
@@ -127,12 +128,11 @@ export const Packs = () => {
             cardsCount: p.cardsCount,
             grade: p.grade,
             shots: p.shots,
-            rating: p.rating
-            // action: p.user_id === profile?._id && <Button onClick={() => deletePackHandler(p._id)}>Delete</Button>
+            rating: p.rating,
+            user_id: p.user_id,
+            action: p.user_id === profile?._id && <Button onClick={() => deletePackHandler(p._id)}>Delete</Button>
         }))
     }
-
-    const a = packs.cardPacks
 
     const onChangePageHandler = (page: number) => {
         dispatch(getPacksTC({page}))
@@ -149,13 +149,21 @@ export const Packs = () => {
                 <Checkbox onChange={(e) => setMyPacksHandler(e)}>My packs</Checkbox>
             </div>
             <Table dataSource={data} pagination={false}>
-                <Column title="Name" dataIndex="name" key="name" render={(value, record:PackType, index) => (
+                <Column title="Name" dataIndex="name" key="name" render={(value, record: PackType) => (
+                    record.user_id === profile._id ?
                     <EditableCell>
                         {record.name}
                     </EditableCell>
+                        :
+                        <td>{record.name}</td>
                 )
                 }
                 />
+                <Column title={'Cards Count'} dataIndex={'cardsCount'} key={'cardsCount'}/>
+                <Column title={'Grade'} dataIndex={'grade'} key={'grade'}/>
+                <Column title={'Shots'} dataIndex={'shots'} key={'shots'}/>
+                <Column title={'Rating'} dataIndex={'rating'} key={'rating'}/>
+                <Column title={'Delete'} dataIndex={'action'} key={'x'}/>
             </Table>
             <Pagination
                 onChange={onChangePageHandler}

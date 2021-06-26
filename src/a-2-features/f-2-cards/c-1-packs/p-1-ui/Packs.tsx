@@ -2,26 +2,29 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {PacksStateType, PackType} from '../p-2-bll/packsInitState'
 import React, {useEffect, useState} from 'react'
-import {createPackTC, deletePackTC, getPacksTC} from '../p-2-bll/packsThunks'
+import {createPackTC, deletePackTC, getPacksTC, updatePack} from '../p-2-bll/packsThunks'
 import {Button, Checkbox, Form, Input, Pagination, Table} from 'antd'
 import {ProfileType} from '../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
 import {CheckboxChangeEvent} from 'antd/es/checkbox'
 import {packsActions} from '../p-2-bll/packsActions'
 import Column from 'antd/lib/table/Column'
-import Cell from 'antd/es/descriptions/Cell'
 
-const EditableCell: React.FC = ({
-                                    children,
-                                    ...restProps
-                                }) => {
+type EditableCellPropsType = {
+    id: string
+}
 
+const EditableCell: React.FC<EditableCellPropsType> = ({
+                                                           id,
+                                                           children,
+                                                           ...restProps
+                                                       }) => {
+    const dispatch = useDispatch()
+    const [value, setValue] = useState<string>(children as string)
+    const setValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
     const [editMode, setEditMode] = useState(false)
-
-    const onEditMode = () => {
-        setEditMode(true)
-    }
-
+    const onEditMode = () => setEditMode(true)
     const offEditMode = () => {
+        dispatch(updatePack({_id: id, name: value}))
         setEditMode(false)
     }
 
@@ -37,7 +40,7 @@ const EditableCell: React.FC = ({
                         }
                     ]}
                 >
-                    <Input autoFocus onBlur={offEditMode}/>
+                    <Input value={value} onChange={(e) => setValueHandler(e)} autoFocus onBlur={offEditMode}/>
                 </Form.Item>
             </td>
             :
@@ -122,7 +125,7 @@ export const Packs = () => {
     let data
     if (packs.cardPacks) {
         data = packs.cardPacks.map((p, index) => ({
-            id: p._id,
+            _id: p._id,
             key: index,
             name: p.name,
             cardsCount: p.cardsCount,
@@ -151,9 +154,9 @@ export const Packs = () => {
             <Table dataSource={data} pagination={false}>
                 <Column title="Name" dataIndex="name" key="name" render={(value, record: PackType) => (
                     record.user_id === profile._id ?
-                    <EditableCell>
-                        {record.name}
-                    </EditableCell>
+                        <EditableCell id={record._id}>
+                            {record.name}
+                        </EditableCell>
                         :
                         <td>{record.name}</td>
                 )

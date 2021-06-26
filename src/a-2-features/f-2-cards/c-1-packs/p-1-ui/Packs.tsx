@@ -3,13 +3,49 @@ import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {PacksStateType} from '../p-2-bll/packsInitState'
 import React, {useEffect, useState} from 'react'
 import {createPackTC, deletePackTC, getPacksTC} from '../p-2-bll/packsThunks'
-import {Button, Checkbox, Pagination, Table} from 'antd'
+import {Button, Checkbox, Form, Input, Pagination, Table} from 'antd'
 import {ProfileType} from '../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
 import {CheckboxChangeEvent} from 'antd/es/checkbox'
 import {packsActions} from '../p-2-bll/packsActions'
 
+const EditableCell: React.FC = ({
+                                    children,
+                                    ...restProps
+                                }) => {
 
-export const Packs = () => {
+    const [editMode, setEditMode] = useState(false)
+
+    const onEditMode = () => {
+        setEditMode(true)
+    }
+
+    const offEditMode = () => {
+        setEditMode(false)
+    }
+
+    return (
+        editMode ?
+            <td {...restProps}>
+                <Form.Item
+                    style={{margin: 0}}
+                    rules={[
+                        {
+                            required: true,
+                            message: `Please Input!`
+                        }
+                    ]}
+                >
+                    <Input onBlur={offEditMode}/>
+                </Form.Item>
+            </td>
+            :
+            <td onDoubleClick={onEditMode}>{children}</td>
+    )
+}
+
+
+export const Packs = () =>
+{
     const packs = useSelector<AppRootStateType, PacksStateType>(state => state.packs)
     const profile = useSelector<AppRootStateType, ProfileType>(state => state.profile.profile as ProfileType)
     const dispatch = useDispatch()
@@ -48,7 +84,7 @@ export const Packs = () => {
             dataIndex: 'name',
             key: 'name',
             editable: true,
-            width: '30%',
+            width: '30%'
         },
         {
             title: 'Cards Count',
@@ -84,14 +120,14 @@ export const Packs = () => {
 
     let data
     if (packs.cardPacks) {
-         data = packs.cardPacks.map((p, index) => ({
+        data = packs.cardPacks.map((p, index) => ({
             key: index,
             name: p.name,
             cardsCount: p.cardsCount,
             grade: p.grade,
             shots: p.shots,
             rating: p.rating,
-            action: p.user_id === profile?._id && <Button onClick={() => deletePackHandler(p._id)}>Delete</Button>,
+            action: p.user_id === profile?._id && <Button onClick={() => deletePackHandler(p._id)}>Delete</Button>
         }))
     }
 

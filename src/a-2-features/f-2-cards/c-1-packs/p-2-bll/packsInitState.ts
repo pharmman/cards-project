@@ -12,6 +12,7 @@ export type PackType = {
     created: Date | string
     updated: Date | string
     __v: number
+    user_name: string
 }
 
 export interface PacksStateType extends GetPacksResponseType {

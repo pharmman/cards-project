@@ -6,7 +6,7 @@ import {LoginPage} from "../../../../a-2-features/f-1-auth/a-1-login/l-1-ui/u-1-
 import {NewPasswordPage} from '../../../../a-2-features/f-1-auth/a-3-forgot/f-1-ui/u-2-newPasswordPage/NewPasswordPage'
 import {ProfilePage} from '../../../../a-2-features/f-1-auth/a-4-profile/p-1-ui/ProfilePage'
 import {LoginRedirect} from '../../../../a-3-common/c-2-loginRedirect/LoginRedirect'
-import {Packs} from '../../../../a-2-features/f-2-cards/c-1-packs/p-1-ui/Packs'
+import {Packs} from '../../../../a-2-features/f-2-cards/c-1-packs/p-1-ui/u-1-Table/Packs'
 
 export type PageType = {
     _id: number;

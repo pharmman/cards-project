@@ -11,45 +11,48 @@ import Column from 'antd/lib/table/Column'
 
 type EditableCellPropsType = {
     id: string
+    edited: boolean
+    saveEditedValue: (id: string) => void
 }
 
 const EditableCell: React.FC<EditableCellPropsType> = ({
+                                                           edited,
                                                            id,
+                                                           saveEditedValue,
                                                            children,
                                                            ...restProps
                                                        }) => {
-    const dispatch = useDispatch()
-    const [value, setValue] = useState<string>(children as string)
-    const setValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value)
-    const [editMode, setEditMode] = useState(false)
-    const onEditMode = () => setEditMode(true)
-    const offEditMode = () => {
-        dispatch(updatePack({_id: id, name: value}))
-        setEditMode(false)
+
+    const offEditMode = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            saveEditedValue(id)
+        }
     }
 
     return (
-        editMode ?
-            <td {...restProps}>
+        edited ?
+            <div {...restProps}>
                 <Form.Item
                     style={{margin: 0}}
+                    name={id}
                     rules={[
                         {
                             required: true,
-                            message: `Please Input!`
+                            message: `Please enter name!`
                         }
                     ]}
                 >
-                    <Input value={value} onChange={(e) => setValueHandler(e)} autoFocus onBlur={offEditMode}/>
+                    <Input onKeyPress={offEditMode} autoFocus/>
                 </Form.Item>
-            </td>
+            </div>
             :
-            <td onDoubleClick={onEditMode}>{children}</td>
+            <div>{children}</div>
     )
 }
 
-
 export const Packs = () => {
+    const [form] = Form.useForm()
+    const [editedId, setEditedId] = useState<string>('')
     const packs = useSelector<AppRootStateType, PacksStateType>(state => state.packs)
     const profile = useSelector<AppRootStateType, ProfileType>(state => state.profile.profile as ProfileType)
     const dispatch = useDispatch()
@@ -66,13 +69,8 @@ export const Packs = () => {
         } else {
             dispatch(packsActions.setPacksUserId(''))
         }
-        dispatch(getPacksTC())
+        profile && dispatch(getPacksTC())
     }, [myPacks, dispatch, profile])
-
-    useEffect(() => {
-        dispatch(getPacksTC())
-    }, [dispatch])
-
 
     const addPackHandler = () => {
         dispatch(createPackTC())
@@ -82,64 +80,43 @@ export const Packs = () => {
         dispatch(deletePackTC(id))
     }
 
-    // const columns = [
-    //     {
-    //         title: 'Name',
-    //         dataIndex: 'name',
-    //         key: 'name',
-    //         editable: true,
-    //         width: '30%'
-    //     },
-    //     {
-    //         title: 'Cards Count',
-    //         dataIndex: 'cardsCount',
-    //         key: 'cardsCount',
-    //         width: '10%'
-    //     },
-    //     {
-    //         title: 'Grade',
-    //         dataIndex: 'grade',
-    //         key: 'grade',
-    //         width: '10%'
-    //     },
-    //     {
-    //         title: 'Shots',
-    //         key: 'shots',
-    //         dataIndex: 'shots',
-    //         width: '10%'
-    //     },
-    //     {
-    //         title: 'Rating',
-    //         key: 'rating',
-    //         dataIndex: 'rating',
-    //         width: '10%'
-    //     },
-    //     {
-    //         title: 'Delete',
-    //         dataIndex: 'action',
-    //         key: 'x',
-    //         width: '10%'
-    //     }
-    // ]
+    const setEditedPack = (record: PackType) => {
+        form.setFieldsValue(record.name)
+        setEditedId(record._id)
+    }
 
     let data
     if (packs.cardPacks) {
         data = packs.cardPacks.map((p, index) => ({
-            _id: p._id,
             key: index,
+            _id: p._id,
             name: p.name,
             cardsCount: p.cardsCount,
             grade: p.grade,
             shots: p.shots,
             rating: p.rating,
             user_id: p.user_id,
-            action: p.user_id === profile?._id && <Button onClick={() => deletePackHandler(p._id)}>Delete</Button>
         }))
     }
 
     const onChangePageHandler = (page: number) => {
         dispatch(getPacksTC({page}))
     }
+
+    const saveEditedValue = async (_id: string) => {
+        try {
+            const row = await form.validateFields()
+            dispatch(updatePack({_id, name: row[_id]}))
+            setEditedId('')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const cancelEditedValue = (_id:string) => {
+        setEditedId('')
+    }
+
 
     return (
         <div>
@@ -151,23 +128,37 @@ export const Packs = () => {
             <div style={{textAlign: 'left'}}>
                 <Checkbox onChange={(e) => setMyPacksHandler(e)}>My packs</Checkbox>
             </div>
-            <Table dataSource={data} pagination={false}>
-                <Column title="Name" dataIndex="name" key="name" render={(value, record: PackType) => (
-                    record.user_id === profile._id ?
-                        <EditableCell id={record._id}>
+            <Form form={form}>
+                <Table dataSource={data} pagination={false}>
+                    <Column title="Name" dataIndex="name" key="name" render={(value, record: PackType) => (
+                        <EditableCell id={record._id} saveEditedValue={saveEditedValue} edited={record._id === editedId}>
                             {record.name}
                         </EditableCell>
-                        :
-                        <td>{record.name}</td>
-                )
-                }
-                />
-                <Column title={'Cards Count'} dataIndex={'cardsCount'} key={'cardsCount'}/>
-                <Column title={'Grade'} dataIndex={'grade'} key={'grade'}/>
-                <Column title={'Shots'} dataIndex={'shots'} key={'shots'}/>
-                <Column title={'Rating'} dataIndex={'rating'} key={'rating'}/>
-                <Column title={'Delete'} dataIndex={'action'} key={'x'}/>
-            </Table>
+                    )}/>
+                    <Column title={'Cards Count'} dataIndex={'cardsCount'} key={'cardsCount'}/>
+                    <Column title={'Grade'} dataIndex={'grade'} key={'grade'}/>
+                    <Column title={'Shots'} dataIndex={'shots'} key={'shots'}/>
+                    <Column title={'Rating'} dataIndex={'rating'} key={'rating'}/>
+                    <Column title={'Delete'} dataIndex={'action'} key={'x'} render={(value, record: PackType) => (
+                        editedId === record._id ?
+                            <>
+                                <Button onClick={() => saveEditedValue(record._id)}>Save</Button>
+                                <Button onClick={() => cancelEditedValue(record._id)}>Cancel</Button>
+                            </>
+                            :
+                            <>
+                                {record.user_id === profile?._id &&
+                                <>
+                                    <Button onClick={() => deletePackHandler(record._id)}>Delete</Button>
+                                    <Button onClick={() => setEditedPack(record)}>Edit</Button>
+                                </>
+                                }
+                                <Button onClick={() => {
+                                }}>Learn</Button>
+                            </>
+                    )}/>
+                </Table>
+            </Form>
             <Pagination
                 onChange={onChangePageHandler}
                 total={packs.cardPacksTotalCount}

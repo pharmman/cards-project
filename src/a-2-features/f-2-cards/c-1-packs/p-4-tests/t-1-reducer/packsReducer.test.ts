@@ -2,7 +2,6 @@ import {PacksStateType, PackType} from '../../p-2-bll/packsInitState'
 import {packsReducer} from '../../p-2-bll/packsReducer'
 import {packsActions} from '../../p-2-bll/packsActions'
 
-
 export const packForTests:PackType = {
     _id: 'test',
     __v: 1,
@@ -14,7 +13,8 @@ export const packForTests:PackType = {
     updated: new Date().toDateString(),
     rating: 10,
     shots: 5,
-    user_id: 'testUser'
+    user_id: '',
+    user_name: 'testUserName'
 }
 
 const testPacksInfo:PacksStateType = {
@@ -24,7 +24,7 @@ const testPacksInfo:PacksStateType = {
     maxCardsCount: 8,
     minCardsCount: 4,
     page: 5,
-    packsUserId: 'test'
+    packsUserId: ''
 }
 
 describe('Packs reducer test', () => {
@@ -42,10 +42,16 @@ describe('Packs reducer test', () => {
         }
         testPack = packForTests
     })
-    it('packs should change', () => {
-
+    it('packs state should change', () => {
         const newState = packsReducer(state, packsActions.setPacks(testPacksInfo))
-
         expect(newState).toEqual(testPacksInfo)
     })
+    it('should packs userID change',  () => {
+        const newUserId = 'testUserId'
+        const newState = packsReducer(state, packsActions.setPacksUserId(newUserId))
+        expect(newState.packsUserId).toBe(newUserId)
+    })
 })
+
+
+

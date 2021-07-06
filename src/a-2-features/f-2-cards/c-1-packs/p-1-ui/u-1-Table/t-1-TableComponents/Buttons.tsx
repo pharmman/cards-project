@@ -1,4 +1,4 @@
-import {PackType} from '../../p-2-bll/packsInitState'
+import {PackType} from '../../../p-2-bll/packsInitState'
 import React from 'react'
 import {Button} from 'antd'
 
@@ -22,13 +22,13 @@ export const ButtonsEditingCondition: React.FC<ButtonEditingConditionPropsType> 
 type ButtonsStableConditionPropsType = {
     profileId?: string
     deletePackHandler: (id: string) => void
-    setEditedPack: (pack: PackType) => void
+    redirectToEditCards: (id: string) => void
     pack: PackType
 }
 export const ButtonsStableCondition: React.FC<ButtonsStableConditionPropsType> = ({
                                                                                       pack,
                                                                                       profileId,
-                                                                                      setEditedPack,
+                                                                                      redirectToEditCards,
                                                                                       deletePackHandler
                                                                                   }) => {
     return (
@@ -36,7 +36,7 @@ export const ButtonsStableCondition: React.FC<ButtonsStableConditionPropsType> =
             {pack.user_id === profileId &&
             <>
                 <Button onClick={() => deletePackHandler(pack._id)}>Delete</Button>
-                <Button onClick={() => setEditedPack(pack)}>Edit</Button>
+                <Button onClick={() => redirectToEditCards(pack._id)}>Edit</Button>
             </>
             }
             <Button onClick={() => {

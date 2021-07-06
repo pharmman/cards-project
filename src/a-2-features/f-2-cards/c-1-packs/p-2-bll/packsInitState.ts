@@ -9,8 +9,8 @@ export type PackType = {
     shots: number
     rating: number
     type: 'pack' | 'folder'
-    created: Date | string
-    updated: Date | string
+    created: Date
+    updated: Date
     __v: number
     user_name: string
 }

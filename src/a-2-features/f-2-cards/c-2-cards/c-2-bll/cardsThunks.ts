@@ -1,18 +1,14 @@
-import {CreatePackRequestData, GetPacksRequestData, PacksAPI, UpdatePackRequestData} from '../p-3-dal/PacksAPI'
+import {CardsAPI, CreateCardDataType, GetCardsRequestDataType, UpdateCardRequestDataType} from '../c-3-dal/CardsAPI'
 import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
-import {packsActions, PacksActionsType} from './packsActions'
+import {cardsActions, CardsActionsType} from './cardsActions'
 import {appActions, AppActionsType} from '../../../f-3-app/a-2-bll/appActions'
 
-
-export let getPacksTC = (data?: GetPacksRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch, getState) => {
-    const {packsUserId} = getState().packs
+export const getCardsTC = (data: GetCardsRequestDataType): ThunkType<CardsActionsType | AppActionsType> => async (dispatch) => {
     dispatch(appActions.setLoading(true))
     try {
-        const res = packsUserId ? await PacksAPI.getPacks({...data, user_id: packsUserId})
-            :
-            await PacksAPI.getPacks(data)
-        dispatch(packsActions.setPacks(res.data))
+        const res = await CardsAPI.getCards(data)
         dispatch(appActions.setError(''))
+        dispatch(cardsActions.setCards(res.data))
     } catch (e) {
         const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
         dispatch(appActions.setError(error))
@@ -22,14 +18,14 @@ export let getPacksTC = (data?: GetPacksRequestData): ThunkType<PacksActionsType
     }
 }
 
-export const createPackTC = (data?: CreatePackRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch) => {
+export const createCardTC = (data: CreateCardDataType): ThunkType<AppActionsType> => async (dispatch) => {
     dispatch(appActions.setLoading(true))
     try {
-        await PacksAPI.createPack(data)
+        await CardsAPI.createCard({card: data})
         dispatch(appActions.setError(''))
-        dispatch(getPacksTC())
+        dispatch(getCardsTC({cardsPack_id: data.cardsPack_id}))
     } catch (e) {
-        const error = e.message || 'Some error occurred, please try again'
+        const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
         dispatch(appActions.setError(error))
         console.log('Error:', {...e})
     } finally {
@@ -37,13 +33,14 @@ export const createPackTC = (data?: CreatePackRequestData): ThunkType<PacksActio
     }
 }
 
-export const deletePackTC = (packId: string): ThunkType<PacksActionsType | AppActionsType> => async (dispatch) => {
+export const deleteCardTC = (id: string): ThunkType<AppActionsType> => async (dispatch, getState) => {
     dispatch(appActions.setLoading(true))
     try {
-        await PacksAPI.deletePack(packId)
-        dispatch(getPacksTC())
+        await CardsAPI.deleteCard(id)
+        dispatch(appActions.setError(''))
+        dispatch(getCardsTC({cardsPack_id: getState().cards.cardsPackId}))
     } catch (e) {
-        const error = e.response ? e.response?.data?.error : 'Some error occurred, please try again'
+        const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
         dispatch(appActions.setError(error))
         console.log('Error:', {...e})
     } finally {
@@ -51,12 +48,12 @@ export const deletePackTC = (packId: string): ThunkType<PacksActionsType | AppAc
     }
 }
 
-export const updatePack = (data: UpdatePackRequestData): ThunkType<PacksActionsType | AppActionsType> => async (dispatch) => {
+export const updateCardTC = (data: UpdateCardRequestDataType): ThunkType<AppActionsType> => async (dispatch, getState) => {
     dispatch(appActions.setLoading(true))
     try {
-        await PacksAPI.updatePack({...data})
-        dispatch(getPacksTC())
+        await CardsAPI.updateCard(data)
         dispatch(appActions.setError(''))
+        dispatch(getCardsTC({cardsPack_id: getState().cards.cardsPackId}))
     } catch (e) {
         const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
         dispatch(appActions.setError(error))

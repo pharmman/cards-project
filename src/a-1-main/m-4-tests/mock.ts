@@ -9,6 +9,6 @@ import {instance} from '../m-3-dal/instance'
 type DispatchExts = ThunkDispatch<AppRootStateType, void, AnyAction>;
 
 const middlewares = [thunk]
-const mockStore = configureMockStore<AppRootStateType, DispatchExts>(middlewares)
+export const mockStore = configureMockStore<AppRootStateType, DispatchExts>(middlewares)
 export const mock = new MockAdapter(instance)
 export const store = mockStore()

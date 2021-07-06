@@ -1,42 +1,40 @@
 import React from 'react'
 import {Form, Input} from 'antd'
+import {PackType} from '../../../p-2-bll/packsInitState'
 
 type EditableCellPropsType = {
-    id: string
+    pack: PackType
     edited: boolean
     saveEditedValue: (id: string) => void
+    activateEditMode: (pack: PackType) => void
 }
 export const EditableCell: React.FC<EditableCellPropsType> = ({
                                                                   edited,
-                                                                  id,
                                                                   saveEditedValue,
+                                                                  pack,
+                                                                  activateEditMode,
                                                                   children,
                                                                   ...restProps
                                                               }) => {
-
-    const offEditMode = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            saveEditedValue(id)
-        }
-    }
-
     return (
         edited ?
             <div {...restProps}>
                 <Form.Item
                     style={{margin: 0}}
-                    name={id}
+                    name={pack._id}
+                    initialValue={pack.name}
                     rules={[
                         {
                             required: true,
-                            message: `Please nput name!`
+                            message: `Please input name!`
                         }
                     ]}
                 >
-                    <Input onKeyPress={offEditMode} autoFocus/>
+                    <Input onPressEnter={() => saveEditedValue(pack._id)} onBlur={() => saveEditedValue(pack._id)}
+                           autoFocus/>
                 </Form.Item>
             </div>
             :
-            <div>{children}</div>
+            <div className={'editable-row'} onClick={() => activateEditMode(pack)}>{children}</div>
     )
 }

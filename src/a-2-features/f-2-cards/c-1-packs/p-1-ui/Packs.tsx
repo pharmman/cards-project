@@ -3,7 +3,7 @@ import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
 import {PacksDomainType} from '../p-2-bll/packsInitState'
 import React, {useCallback, useEffect, useState} from 'react'
 import {createPackTC, getPacksTC} from '../p-2-bll/packsThunks'
-import {Button, Checkbox, Pagination} from 'antd'
+import {Button, Checkbox} from 'antd'
 import {ProfileType} from '../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
 import {CheckboxChangeEvent} from 'antd/es/checkbox'
 import {packsActions} from '../p-2-bll/packsActions'
@@ -44,6 +44,10 @@ export const Packs = () => {
         setSearchValue(newValue)
     }, [])
 
+    //sorting
+    const [sorted, setSorted] = useState('')
+    const setSortedHandler = (fieldDirection:string) => setSorted(fieldDirection)
+
 
     useEffect(() => {
         if (myPacks && profile) {
@@ -51,8 +55,8 @@ export const Packs = () => {
         } else {
             dispatch(packsActions.setPacksUserId(''))
         }
-        profile && dispatch(getPacksTC({packName: debouncingValue, pageCount: pageSize, page:currentPage}))
-    }, [myPacks, dispatch, profile, debouncingValue, pageSize, currentPage])
+        profile && dispatch(getPacksTC({packName: debouncingValue, pageCount: pageSize, page:currentPage, sortPacks: sorted}))
+    }, [myPacks, dispatch, profile, debouncingValue, pageSize, currentPage, sorted])
     if (redirect) return <Redirect to={PATH.CARDS}/>
 
     return (
@@ -66,7 +70,7 @@ export const Packs = () => {
             <div style={{textAlign: 'left'}}>
                 <Checkbox onChange={(e) => setMyPacksHandler(e)}>My packs</Checkbox>
             </div>
-            <PacksTable redirectToEditCards={redirectToEditCards} onPageChange={onPageChange} packs={packs} profile={profile}/>
+            <PacksTable setSortedHandler={setSortedHandler} redirectToEditCards={redirectToEditCards} onPageChange={onPageChange} packs={packs} profile={profile}/>
         </>
     )
 }

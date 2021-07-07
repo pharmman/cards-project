@@ -47,19 +47,19 @@ export type UpdateCardRequestDataType = {
 
 export const CardsAPI = {
     getCards(data: GetCardsRequestDataType) {
-        return instance.get<GetCardsResponseType>('/cards/card', {
+        return instance.get<GetCardsResponseType>('cards/card', {
             params: {
                 ...data
             }
         })
     },
     createCard(data: CreateCardRequestDataType) {
-        return instance.post('/cards/card', data)
+        return instance.post('cards/card', data)
     },
     deleteCard(id: string) {
-        return instance.delete(`/cards/card?id=${id}`)
+        return instance.delete(`cards/card?id=${id}`)
     },
     updateCard(data: UpdateCardRequestDataType) {
-        return instance.put('/cards/card', data)
+        return instance.put('cards/card', data)
     }
 }

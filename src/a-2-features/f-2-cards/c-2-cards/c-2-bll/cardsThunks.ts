@@ -7,8 +7,8 @@ export const getCardsTC = (data: GetCardsRequestDataType): ThunkType<CardsAction
     dispatch(appActions.setLoading(true))
     try {
         const res = await CardsAPI.getCards(data)
-        dispatch(appActions.setError(''))
         dispatch(cardsActions.setCards(res.data))
+        dispatch(appActions.setError(''))
     } catch (e) {
         const error = e.response ? e.response.data.error : 'Some error occurred, please try again'
         dispatch(appActions.setError(error))

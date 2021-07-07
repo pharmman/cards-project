@@ -9,17 +9,17 @@ export type PackType = {
     shots: number
     rating: number
     type: 'pack' | 'folder'
-    created: Date
-    updated: Date
+    created: Date | string
+    updated: Date | string
     __v: number
     user_name: string
 }
 
-export interface PacksStateType extends GetPacksResponseType {
+export interface PacksDomainType extends GetPacksResponseType {
     packsUserId: string
 }
 
-export const packsInitState:PacksStateType = {
+export const packsInitState:PacksDomainType = {
     cardPacks: null,
     maxCardsCount: 0,
     page: 1,

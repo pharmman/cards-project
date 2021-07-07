@@ -15,11 +15,11 @@ export type CardType = {
     _id: string
 }
 
-interface CardsStateType extends GetCardsResponseType {
+export interface CardsDomainType extends GetCardsResponseType {
     cardsPackId: string
 }
 
-export const cardsInitState: CardsStateType = {
+export const cardsInitState: CardsDomainType = {
     cards: null,
     cardsTotalCount: 0,
     page: 1,

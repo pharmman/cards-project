@@ -1,20 +1,13 @@
 import {mock, mockStore} from '../../../../../a-1-main/m-4-tests/mock'
 import {AppActionsType} from '../../../../f-3-app/a-2-bll/appActions'
 import {PacksActionsType} from '../../p-2-bll/packsActions'
-import {PackType} from '../../p-2-bll/packsInitState'
 import {packForTests} from '../t-1-reducer/packsReducer.test'
-import {createPackTC, deletePackTC, getPacksTC} from '../../p-2-bll/packsThunks'
-import {CreatePackRequestData, GetPacksResponseType} from '../../p-3-dal/PacksAPI'
+import {getPacksTC} from '../../p-2-bll/packsThunks'
+import {GetPacksResponseType} from '../../p-3-dal/PacksAPI'
 import {AppRootStateType} from '../../../../../a-1-main/m-2-bll/store'
 
-let testPack: PackType
-testPack = packForTests
-const packsThunks = {
-    getPacks: getPacksTC,
-}
-
 const getResponse: GetPacksResponseType = {
-    cardPacks: [testPack],
+    cardPacks: [packForTests],
     cardPacksTotalCount: 1,
     maxCardsCount: 10,
     minCardsCount: 3,

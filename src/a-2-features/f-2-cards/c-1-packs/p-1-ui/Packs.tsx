@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from '../../../../a-1-main/m-2-bll/store'
-import {PacksStateType} from '../p-2-bll/packsInitState'
+import {PacksDomainType} from '../p-2-bll/packsInitState'
 import React, {useEffect, useState} from 'react'
 import {createPackTC, getPacksTC} from '../p-2-bll/packsThunks'
 import {Button, Checkbox, Pagination} from 'antd'
@@ -14,7 +14,7 @@ import {PacksTable} from './u-1-Table/PacksTable'
 
 export const Packs = () => {
     const profile = useSelector<AppRootStateType, ProfileType>(state => state.profile.profile as ProfileType)
-    const packs = useSelector<AppRootStateType, PacksStateType>(state => state.packs)
+    const packs = useSelector<AppRootStateType, PacksDomainType>(state => state.packs)
     const dispatch = useDispatch()
     const [redirect, setRedirect] = useState<boolean>(false)
     const [myPacks, setMyPacks] = useState<boolean>(!!packs.packsUserId)

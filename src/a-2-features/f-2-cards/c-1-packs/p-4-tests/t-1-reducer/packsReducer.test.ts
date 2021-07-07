@@ -1,4 +1,4 @@
-import {PacksStateType, PackType} from '../../p-2-bll/packsInitState'
+import {PacksDomainType, PackType} from '../../p-2-bll/packsInitState'
 import {packsReducer} from '../../p-2-bll/packsReducer'
 import {packsActions} from '../../p-2-bll/packsActions'
 
@@ -17,7 +17,7 @@ export const packForTests:PackType = {
     user_name: 'testUserName'
 }
 
-const testPacksInfo:PacksStateType = {
+const testPacksResponse:PacksDomainType = {
     cardPacks: [packForTests],
     cardPacksTotalCount: 977,
     pageCount: 10,
@@ -28,7 +28,7 @@ const testPacksInfo:PacksStateType = {
 }
 
 describe('Packs reducer test', () => {
-    let state: PacksStateType
+    let state: PacksDomainType
     let testPack: PackType
     beforeEach(() => {
         state = {
@@ -43,8 +43,8 @@ describe('Packs reducer test', () => {
         testPack = packForTests
     })
     it('packs state should change', () => {
-        const newState = packsReducer(state, packsActions.setPacks(testPacksInfo))
-        expect(newState).toEqual(testPacksInfo)
+        const newState = packsReducer(state, packsActions.setPacks(testPacksResponse))
+        expect(newState).toEqual(testPacksResponse)
     })
     it('should packs userID change',  () => {
         const newUserId = 'testUserId'

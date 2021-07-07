@@ -1,7 +1,7 @@
 import {instance} from '../../../../a-1-main/m-3-dal/instance'
 import {CardType} from '../c-2-bll/cardsInitState'
 
-export interface GetCardsResponseType  {
+export interface GetCardsResponseType {
     cards: CardType[] | null
     cardsTotalCount: number
     maxGrade: number
@@ -13,10 +13,13 @@ export interface GetCardsResponseType  {
 
 export type GetCardsRequestDataType = {
     cardsPack_id: string
+    cardAnswer?: string
+    cardQuestion?: string
     min?: number
     max?: number
     page?: number
     pageCount?: number
+    sortCards?: number
 }
 
 export type CreateCardRequestDataType = {

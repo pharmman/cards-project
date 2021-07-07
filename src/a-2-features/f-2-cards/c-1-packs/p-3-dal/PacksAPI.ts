@@ -8,6 +8,7 @@ export type GetPacksRequestData = {
     page?: number
     pageCount?: number
     user_id?: string
+    sortPacks?:string
 }
 
 export interface GetPacksResponseType {

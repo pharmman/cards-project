@@ -24,9 +24,16 @@ export const Packs = () => {
         setRedirect(true)
     }
 
+    //pagination
+    const [pageSize, setPageSize] = useState(10)
+    const [currentPage, setCurrentPage] = useState(1)
+    const onPageChange = (page: number, pageSize?: number | undefined) => {
+        setPageSize(pageSize as number);
+        setCurrentPage(page)
+    }
+
     //packsActions
     const addPackHandler = () => dispatch(createPackTC())
-    const onChangePageHandler = (page: number) => dispatch(getPacksTC({page}))
     const [myPacks, setMyPacks] = useState<boolean>(!!packs.packsUserId)
     const setMyPacksHandler = (e: CheckboxChangeEvent) => setMyPacks(e.target.checked)
 
@@ -44,8 +51,8 @@ export const Packs = () => {
         } else {
             dispatch(packsActions.setPacksUserId(''))
         }
-        profile && dispatch(getPacksTC({packName: debouncingValue}))
-    }, [myPacks, dispatch, profile, debouncingValue])
+        profile && dispatch(getPacksTC({packName: debouncingValue, pageCount: pageSize, page:currentPage}))
+    }, [myPacks, dispatch, profile, debouncingValue, pageSize, currentPage])
     if (redirect) return <Redirect to={PATH.CARDS}/>
 
     return (
@@ -59,13 +66,7 @@ export const Packs = () => {
             <div style={{textAlign: 'left'}}>
                 <Checkbox onChange={(e) => setMyPacksHandler(e)}>My packs</Checkbox>
             </div>
-            <PacksTable redirectToEditCards={redirectToEditCards} packs={packs.cardPacks} profile={profile}/>
-            <Pagination
-                onChange={onChangePageHandler}
-                total={packs.cardPacksTotalCount}
-                current={packs.page}
-                showSizeChanger={false}
-            />
+            <PacksTable redirectToEditCards={redirectToEditCards} onPageChange={onPageChange} packs={packs} profile={profile}/>
         </>
     )
 }

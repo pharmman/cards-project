@@ -1,6 +1,6 @@
-import {Form, Table} from 'antd'
+import {Form, Pagination, Table} from 'antd'
 import Column from 'antd/lib/table/Column'
-import {PackType} from '../../p-2-bll/packsInitState'
+import {PacksDomainType, PackType} from '../../p-2-bll/packsInitState'
 import {EditableCell} from './t-1-TableComponents/EditableCell'
 import {ButtonsEditingCondition, ButtonsStableCondition} from './t-1-TableComponents/Buttons'
 import React, {useState} from 'react'
@@ -9,15 +9,17 @@ import {deletePackTC, updatePack} from '../../p-2-bll/packsThunks'
 import {ProfileType} from '../../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
 
 type PacksTablePropsType = {
-    redirectToEditCards: (id:string) => void
-    packs: PackType[] | null
-    profile:ProfileType
+    redirectToEditCards: (id: string) => void
+    packs: PacksDomainType
+    profile: ProfileType
+    onPageChange: (page: number, pageSize?: number | undefined) => void
 }
 
 export const PacksTable: React.FC<PacksTablePropsType> = ({
                                                               profile,
                                                               redirectToEditCards,
                                                               packs,
+                                                              onPageChange
                                                           }) => {
     const [form] = Form.useForm()
     const dispatch = useDispatch()
@@ -51,8 +53,8 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
 
     //table rows
     let data
-    if (packs) {
-        data = packs.map((p, index) => ({
+    if (packs.cardPacks) {
+        data = packs.cardPacks.map((p, index) => ({
             key: index,
             _id: p._id,
             name: p.name,
@@ -89,7 +91,14 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
                                                 redirectToEditCards={redirectToEditCards} profileId={profile._id}/>
                 )}/>
             </Table>
-
+            <Pagination
+                showSizeChanger
+                total={packs.cardPacksTotalCount}
+                current={packs.page}
+                onChange={onPageChange}
+                locale={{items_per_page: ''}}
+                pageSizeOptions={['10', '20']}
+            />
         </Form>
     )
 }

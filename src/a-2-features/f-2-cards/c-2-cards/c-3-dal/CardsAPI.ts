@@ -19,7 +19,7 @@ export type GetCardsRequestDataType = {
     max?: number
     page?: number
     pageCount?: number
-    sortCards?: number
+    sortCards?: string
 }
 
 export type CreateCardRequestDataType = {
@@ -48,21 +48,55 @@ export type UpdateCardRequestDataType = {
     }
 }
 
+export type UpdateCardGradeRequestType = {
+    grade: number
+    card_id: string
+}
+
+export type UpdateGradeResponseType = {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
+}
+
 export const CardsAPI = {
     getCards(data: GetCardsRequestDataType) {
         return instance.get<GetCardsResponseType>('cards/card', {
-            params: {
-                ...data
+                params: {
+                    pageCount: 9999,
+                    ...data
+                }
             }
-        })
+        )
     },
-    createCard(data: CreateCardRequestDataType) {
+    createCard(data
+                   :
+                   CreateCardRequestDataType
+    ) {
         return instance.post('cards/card', data)
-    },
-    deleteCard(id: string) {
+    }
+    ,
+    deleteCard(id
+                   :
+                   string
+    ) {
         return instance.delete(`cards/card?id=${id}`)
-    },
-    updateCard(data: UpdateCardRequestDataType) {
+    }
+    ,
+    updateCard(data
+                   :
+                   UpdateCardRequestDataType
+    ) {
         return instance.put('cards/card', data)
+    }
+    ,
+    updateCardGrade(data: UpdateCardGradeRequestType
+    ) {
+        return instance.put<UpdateGradeResponseType>('cards/grade', data)
     }
 }

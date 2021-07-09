@@ -7,6 +7,7 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {deletePackTC, updatePack} from '../../p-2-bll/packsThunks'
 import {ProfileType} from '../../../../f-1-auth/a-4-profile/p-2-bll/profileActions'
+import {useDebounce} from '../../../../../a-3-common/c-3-debounce/useDebounce'
 
 type PacksTablePropsType = {
     redirectToEditCards: (id: string) => void
@@ -14,6 +15,7 @@ type PacksTablePropsType = {
     profile: ProfileType
     onPageChange: (page: number, pageSize?: number | undefined) => void
     setSortedHandler: (fieldDirection: string) => void
+    learnRedirect: (id:string) => void
 }
 
 export const PacksTable: React.FC<PacksTablePropsType> = ({
@@ -21,7 +23,8 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
                                                               redirectToEditCards,
                                                               packs,
                                                               onPageChange,
-                                                              setSortedHandler
+                                                              setSortedHandler,
+                                                              learnRedirect
                                                           }) => {
     const [form] = Form.useForm()
     const dispatch = useDispatch()
@@ -70,20 +73,19 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
     //sorting
     const [sortingField, setSortingField] = useState('')
     const [sortingDirection, setSortingDirection] = useState('')
-
-    const onChange = (pagination: any, filters: any, sorter: any, extra: any) =>  {
+    const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
         setSortingField(sorter.field)
         setSortingDirection(sorter.order === 'ascend' ? '0' : '1')
     }
-
     useEffect(() => {
         (sortingField && sortingDirection) && setSortedHandler(`${sortingDirection}${sortingField}`)
     }, [sortingField, sortingDirection, setSortedHandler])
 
     return (
         <Form form={form} component={false}>
-            <Table sortDirections={['ascend', 'descend', 'ascend']} onChange={onChange} style={{cursor: 'default'}} dataSource={data} pagination={false}>
-                <Column sorter={true}  showSorterTooltip={false}
+            <Table sortDirections={['ascend', 'descend', 'ascend']} onChange={onChange} style={{cursor: 'default'}}
+                   dataSource={data} pagination={false}>
+                <Column sorter={true} showSorterTooltip={false}
                         filtered={true} title="Name" dataIndex="name" key="name"
                         render={(value, record: PackType) => (
                             record.user_id === profile._id
@@ -96,9 +98,9 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
                                 :
                                 <div>{record.name}</div>
                         )}/>
-                <Column  sorter={true} title={'Cards'}
+                <Column sorter={true} title={'Cards'}
                         dataIndex={'cardsCount'} key={'cardsCount'}/>
-                <Column  title={'Last Updated'} dataIndex={'updated'} key={'updated'}/>
+                <Column title={'Last Updated'} dataIndex={'updated'} key={'updated'}/>
                 <Column sorter={true} showSorterTooltip={false}
                         title={'Created by'} dataIndex={'user_name'} key={'shots'}/>
                 <Column title={'Actions'} dataIndex={'action'} key={'x'} render={(value, record: PackType) => (
@@ -106,7 +108,7 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({
                         <ButtonsEditingCondition packId={record._id} saveEditedValue={saveEditedValue}
                                                  cancelEditedValue={cancelEditedValue}/>
                         :
-                        <ButtonsStableCondition pack={record} deletePackHandler={deletePackHandler}
+                        <ButtonsStableCondition learnRedirect={learnRedirect} pack={record} deletePackHandler={deletePackHandler}
                                                 redirectToEditCards={redirectToEditCards} profileId={profile._id}/>
                 )}/>
             </Table>

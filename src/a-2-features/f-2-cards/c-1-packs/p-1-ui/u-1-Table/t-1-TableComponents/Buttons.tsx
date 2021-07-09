@@ -24,12 +24,14 @@ type ButtonsStableConditionPropsType = {
     deletePackHandler: (id: string) => void
     redirectToEditCards: (id: string) => void
     pack: PackType
+    learnRedirect: (id:string) => void
 }
 export const ButtonsStableCondition: React.FC<ButtonsStableConditionPropsType> = ({
                                                                                       pack,
                                                                                       profileId,
                                                                                       redirectToEditCards,
-                                                                                      deletePackHandler
+                                                                                      deletePackHandler,
+                                                                                      learnRedirect
                                                                                   }) => {
     return (
         <>
@@ -39,8 +41,7 @@ export const ButtonsStableCondition: React.FC<ButtonsStableConditionPropsType> =
                 <Button onClick={() => redirectToEditCards(pack._id)}>Edit</Button>
             </>
             }
-            <Button onClick={() => {
-            }}>Learn</Button>
+            <Button onClick={() => learnRedirect(pack._id)}>Learn</Button>
         </>
     )
 }

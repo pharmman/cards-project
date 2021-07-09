@@ -3,8 +3,8 @@ import {PackType} from '../p-2-bll/packsInitState'
 
 export type GetPacksRequestData = {
     packName?: string
-    min?: number
-    max?: number
+    min?: string
+    max?: string
     page?: number
     pageCount?: number
     user_id?: string

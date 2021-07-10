@@ -1,6 +1,6 @@
 import {PackType} from '../../../p-2-bll/packsInitState'
 import React from 'react'
-import {Button} from 'antd'
+import {Button} from '@material-ui/core'
 
 type ButtonEditingConditionPropsType = {
     saveEditedValue: (id: string) => void

@@ -1,29 +1,33 @@
-.appWrapper {
-  padding: 30px;
-  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
-  min-height: 100vh;
-}
 
-.form-button {
-  margin-bottom: 24px;
+.appWrapper {
+    padding: 20px;
+    background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .formCardMinWidth {
-  min-width: 300px
+    min-width: 414px;
 }
 
 .formCardMaxWidth {
-  max-width: 300px
+    max-width: 300px
 }
 
 .formParagraph {
-  text-align: left;
+    text-align: left;
 }
 
 .editable-row:hover {
-  padding: 4px 11px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  cursor: text;
+    padding: 4px 11px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    cursor: text;
 }
 
+.site-form-item-icon {
+    opacity: 0.5;
+}

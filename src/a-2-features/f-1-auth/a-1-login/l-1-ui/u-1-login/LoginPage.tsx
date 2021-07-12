@@ -27,6 +27,10 @@ type StyledNavLinkPropsType = NavLinkProps & {
     fontWeight: number
 }
 
+type StyledButtonPropsType = ButtonProps & {
+    submit?: 'true' | ''
+}
+
 const StyledCheckbox: React.FC<CheckboxProps> = styled(Checkbox)`
   .ant-checkbox-checked .ant-checkbox-inner {
     filter: brightness(100%);
@@ -51,26 +55,31 @@ export const StyledNavLink: React.FC<StyledNavLinkPropsType> = styled(NavLink)<S
   font-weight: ${props => props.fontWeight};
 `
 
-const StyledButton: React.FC<ButtonProps> = styled(Button)`
-  background: var(--button-color);
-  border-color: var(--button-color);
+export const StyledButton: React.FC<StyledButtonPropsType> = styled(Button)<StyledButtonPropsType>`
+  color: ${props => props.submit ? '#ECECF9' : 'var(--button-color)'};
+  background: ${props => props.submit ? 'var(--button-color)' : 'var(--cancel-button-color)'};
+  border-color: ${props => props.submit ? 'var(--button-color)' : 'var(--cancel-button-color)'};
   border-radius: 18px;
   filter: brightness(100%);
+  font-weight: 500;
+  font-size: 16px;
 
   :hover {
-    background: var(--button-color);
+    background: ${props => props.submit ? 'var(--button-color)' : 'var(--cancel-button-color)'};
     border-color: var(--hover-border-button-color);
-    filter: brightness(130%);
+    filter: ${props => props.submit ? 'brightness(130%)' : 'brightness(90%)'};
+    color: ${props => props.submit ? '#ECECF9' : 'var(--button-color)'};
   }
 `
 
-const StyledCard: React.FC<CardProps> = styled(Card)`
+export const StyledCard: React.FC<CardProps> = styled(Card)`
   border-radius: 8px;
 `
 
 const StyledParagraph: React.FC<ParagraphProps> = styled(Typography.Paragraph)`
   color: rgba(45, 46, 70, .5);
 `
+
 
 export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
@@ -119,7 +128,8 @@ export const LoginPage: React.FC = () => {
                         <Form.Item>
                             <Row>
                                 <Col offset={3} span={18}>
-                                    <StyledButton block size={'large'} type="primary" htmlType="submit">
+                                    <StyledButton submit={'true'} block size={'large'}
+                                                  htmlType="submit">
                                         Log In
                                     </StyledButton>
                                 </Col>

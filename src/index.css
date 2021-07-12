@@ -16,5 +16,6 @@ code {
   --link-main-color: #2D2E46;
   --button-color: #21268F;
   --hover-border-button-color: #FFFFFF;
-  --third-font-color: rgba(45, 46, 70, .5)
+  --third-font-color: rgba(45, 46, 70, .5);
+  --cancel-button-color: #D7D8EF;
 }

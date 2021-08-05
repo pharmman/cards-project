@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from '../m-2-bll/store';
 import { Main } from './main/Main';
 
-//22
+//11
 
 function App() {
   return (

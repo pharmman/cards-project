@@ -1,5 +1,5 @@
 import {ThunkType} from '../../../../a-1-main/m-2-bll/Actions'
-import {RegisterAPI} from '../r-3-dll/RegisterAPI'
+import {RegisterAPI} from '../r-3-dal/RegisterAPI'
 import {registerActions, RegisterActionsType} from './registerActions'
 import {FormDataType} from '../../a-1-login/l-1-ui/u-1-login/LoginPage'
 

@@ -2,9 +2,10 @@ import {Form, Input} from 'antd'
 import {UserOutlined} from '@ant-design/icons'
 import React from 'react'
 
-export const EmailInput = () => {
+export const EmailInput = (style: any) => {
     return (
         <Form.Item
+            style={style}
             name="email"
             rules={[
                 {

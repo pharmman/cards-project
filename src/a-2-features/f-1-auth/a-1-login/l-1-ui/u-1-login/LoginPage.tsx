@@ -12,6 +12,7 @@ import {PageTitles} from '../../../../../a-3-common/c-5-authPagesTitles/PageTitl
 import {ParagraphProps} from 'antd/es/typography/Paragraph'
 import {EmailInput} from '../../../../../a-3-common/c-6-emailInput/EmailInput'
 import {PasswordInput} from '../../../../../a-3-common/c-7-passwordInput/PasswordInput'
+import {AuthFooter} from '../../../../../a-3-common/c-8-authFooter/AuthFooter'
 
 export interface FormDataType {
     email: string
@@ -74,12 +75,12 @@ export const StyledButton: React.FC<StyledButtonPropsType> = styled(Button)<Styl
 
 export const StyledCard: React.FC<CardProps> = styled(Card)`
   border-radius: 8px;
+  width: 414px;
 `
 
-const StyledParagraph: React.FC<ParagraphProps> = styled(Typography.Paragraph)`
+export const StyledParagraph: React.FC<ParagraphProps> = styled(Typography.Paragraph)`
   color: rgba(45, 46, 70, .5);
 `
-
 
 export const LoginPage: React.FC = () => {
     const dispatch = useDispatch()
@@ -109,8 +110,7 @@ export const LoginPage: React.FC = () => {
 
     return (
         <Row>
-            <Col span={6}>
-                <StyledCard className={'formCardMinWidth'}>
+                <StyledCard>
                     <PageTitles title={'Sign In'}/>
                     <Form layout={'vertical'} onFinish={onSubmit} initialValues={{rememberMe: true}}>
                         <EmailInput/>
@@ -136,18 +136,8 @@ export const LoginPage: React.FC = () => {
                             </Row>
                         </Form.Item>
                     </Form>
-                    <Row justify={'center'}>
-                        <Col>
-                            <StyledParagraph>Don’t have an account?</StyledParagraph>
-                        </Col>
-                    </Row>
-                    <Row justify={'center'}>
-                        <Col>
-                            <StyledNavLink fontWeight={600} fontSize={16} to={PATH.REGISTER}>Sign Up</StyledNavLink>
-                        </Col>
-                    </Row>
+                    <AuthFooter paragraph={'Don’t have an account?'} linkText={'Sign Up'} link={PATH.REGISTER}/>
                 </StyledCard>
-            </Col>
         </Row>
     )
 }

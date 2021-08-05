@@ -39,7 +39,7 @@ export const RegisterPage: React.FC = () => {
     }
     return (
         <Row>
-                <StyledCard className={'formCardMinWidth'}>
+                <StyledCard>
                     <PageTitles title={'Sign Up'}/>
                     <Form layout={'vertical'} onFinish={onSubmit}>
                         <div style={{marginBottom: '84px'}}>

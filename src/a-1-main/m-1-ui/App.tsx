@@ -8,6 +8,8 @@ import { Main } from './main/Main';
 
 //1
 
+//2
+
 function App() {
   return (
       <div className="App">
